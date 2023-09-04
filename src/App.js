@@ -2,8 +2,7 @@ import Products from './pages/Products';
 import ProductView from './pages/ProductView';
 import Cart from './pages/Cart';
 import Container from 'react-bootstrap/Container'
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import AppNavbar from './components/AppNavbar'
 import AddProduct from './components/AddProduct'
