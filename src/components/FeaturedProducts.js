@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { CardGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import PreviewProducts from './PreviewProducts'
 
 export default function FeaturedProducts(){
 
 	const [ previews, setPreviews ] = useState([]);
-	let productLength = 4;
+	
 
 	useEffect(()=>{
 		fetch(`${process.env.REACT_APP_API_URL}/products/allActive`)
@@ -27,7 +26,9 @@ export default function FeaturedProducts(){
 
 		}
 
- 	if (data.length < 4) { 
+		let productLength = 4;
+ 		if (data.length < 4) { 
+
 			productLength = data.length;   
         } else {
             productLength = 4;

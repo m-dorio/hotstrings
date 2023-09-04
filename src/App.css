@@ -29,7 +29,7 @@
   --gradient-bg:
   linear-gradient(127deg, var(--main-color), rgba(0, 0, 0, 0) 80.71%),
   linear-gradient(217deg, var(--main-color), rgba(0, 0, 0, 0) 80.71%),  
-  url();
+  url('');
   --transition1: 0.30s ease-in-out;
   
 }
@@ -165,7 +165,6 @@ footer {
 
 #landing{
   background: var(--gradient-bg), url('https://m-dorio.github.io/foodstore/images/landing-ramen.jpg');
-  /* background-image: url(https://m-dorio.github.io/foodstore/images/landing-ramen.jpg); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;

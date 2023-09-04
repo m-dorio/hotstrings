@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import Footer from './Footer';
 
 export default function UserView({productsData}) {

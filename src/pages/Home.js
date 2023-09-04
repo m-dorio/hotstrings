@@ -1,8 +1,5 @@
-import Banner from '../components/Banner'
-import Display from '../components/Display'
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom';
-import {Row, Col, Container} from 'react-bootstrap';
 import FeaturedProducts from '../components/FeaturedProducts'
 
 // const data = {

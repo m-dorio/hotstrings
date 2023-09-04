@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Row, Container, Col } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Row, Container } from 'react-bootstrap';
 import Footer from '../components/Footer'
 import UserContext from '../UserContext';
 

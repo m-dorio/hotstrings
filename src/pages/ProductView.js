@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import UserContext from "../UserContext";
 import Footer from '../components/Footer'
@@ -11,7 +11,7 @@ export default function ProductView(){
     const { user } = useContext(UserContext)
     // The "useParams" hook allows us to retieve the productId passed via the URL
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const{ productId} = useParams();
 
@@ -59,12 +59,13 @@ export default function ProductView(){
         fetch(`${process.env.REACT_APP_API_URL }/products/${productId}`)
     .then(res => res.json())
     .then(data => {
-        console.log(data)
+        quantity = data.quantity
+        // console.log(data)
         setName(data.name);
         setDescription(data.description);
         setPrice(data.price);
         setImage(data.productImg);
-        setQuantity(data.quantity);
+        setQuantity(quantity);
    
     })
 }, [productId])
