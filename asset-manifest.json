@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/hotstrings/static/css/main.189a8b62.css",
+    "main.js": "/hotstrings/static/js/main.6972f9c3.js",
+    "index.html": "/hotstrings/index.html",
+    "main.189a8b62.css.map": "/hotstrings/static/css/main.189a8b62.css.map",
+    "main.6972f9c3.js.map": "/hotstrings/static/js/main.6972f9c3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.189a8b62.css",
+    "static/js/main.6972f9c3.js"
+  ]
+}
