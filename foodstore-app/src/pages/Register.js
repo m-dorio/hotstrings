@@ -1,10 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import UserContext from '../UserContext';
+import { Navigate } from 'react-router-dom';
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import Footer from '../components/Footer'
+import Swal from 'sweetalert2';
 
+export default function Register() {
 
-export default function Register(){
-
+	const { user, setUser} = useContext(UserContext);
 	//State hooks to store the values of the input fields
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+          // Update the user context with the access token
+          setUser({ access: token });
+        }
+      });
+
 	const [ firstName, setFirstName ] = useState("");
 	//(5 mins) add state hooks for lastName, email, mobileNo, password, confirmPassword, isActive(button)
 	const [lastName,setLastName] = useState("");
@@ -16,21 +28,13 @@ export default function Register(){
 	//State to determine whether submit button is enabled or not
     const [isActive, setIsActive] = useState(false);
 
-    //check if values are successfully binded
-    console.log(firstName);
-    console.log(lastName);
-    console.log(email);
-    console.log(mobileNo);
-    console.log(password);
-    console.log(confirmPassword);
-
     //fetch
 
     function registerUser(e){
     	//prevent page redirection via form submission
     	e.preventDefault();
 
-    	fetch('http://localhost:4000/users/register',{
+    	fetch(`${process.env.REACT_APP_API_URL}/users/register`,{
     		method: 'POST',
     		headers:{
     			"Content-Type":"application/json"
@@ -48,7 +52,6 @@ export default function Register(){
     	.then(res=>res.json())
     	.then(data=>{
 
-    		console.log(data)
     		if(data){
 
     			setFirstName('');
@@ -57,16 +60,24 @@ export default function Register(){
     			setMobileNo('');
     			setPassword('');
     			setConfirmPassword('')
-
-    			alert("Thank you for registering!")
-
-    		}else{
-    			alert("Please try again")
-    		}
-    	})
+    		
+                Swal.fire({
+                    title: "Registration successfull",
+                    icon: "success",
+                    text: "Welcome to HotStrings!"
+                })
+        
+            } else {
+        
+                Swal.fire({
+                    title: "Authentication Failed.",
+                    icon: "error",
+                    text: "Check your login details and try again."
+                })
+          
+            }
+    	}, [])
     }
-
-
 
     //useEffect() has 2 arguments
     	//function - side effect you want to perform
@@ -84,7 +95,15 @@ export default function Register(){
 
     },[firstName,lastName,email,mobileNo,password,confirmPassword])
 
+	// console.log(user.access)
+
 	return(
+
+        (user.id !==null)?
+        <Navigate to="/products/all" />
+		:
+		<>
+
         <div className="text-warning vh-100">
         <Row className='mt-3 mb-3 d-flex justify-content-center'>
             <Col xs={12} md={6} lg={4} xl={3}>
@@ -102,7 +121,7 @@ export default function Register(){
                     />
                 </Form.Group>
 
-                <Form.Group>
+                <Form.Group className='mt-3'>
                     <Form.Label>Last Name:</Form.Label>
                     <Form.Control
                         type="text"
@@ -113,7 +132,7 @@ export default function Register(){
                     />
                 </Form.Group>
 
-                <Form.Group>
+                <Form.Group className='mt-3'>
                     <Form.Label>Email:</Form.Label>
                     <Form.Control
                         type="email"
@@ -124,7 +143,7 @@ export default function Register(){
                     />
                 </Form.Group>
 
-                <Form.Group>
+                <Form.Group className='mt-3'>
                     <Form.Label>Mobile No:</Form.Label>
                     <Form.Control
                         type="text"
@@ -135,7 +154,7 @@ export default function Register(){
                     />
                 </Form.Group>
 
-                <Form.Group>
+                <Form.Group className='mt-3'>
                     <Form.Label>Password: </Form.Label>
                     <Form.Control
                         type="password"
@@ -146,7 +165,7 @@ export default function Register(){
                     />
                 </Form.Group>
 
-                <Form.Group>
+                <Form.Group className='mt-3'>
                     <Form.Label>Confirm Password: </Form.Label>
                     <Form.Control
                         type="password"
@@ -167,6 +186,9 @@ export default function Register(){
             </Form>
             </Col>
         </Row>
+       
         </div>
+        <Footer />
+    </>
 	)
 }

@@ -1,0 +1,176 @@
+*{
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+  text-decoration: none !important;
+  border: none ;
+  outline: none;
+  scroll-behavior: smooth;
+}
+
+:root{
+  --p-color:#d62828;
+  --s-color:#f77f00;
+  --text-color:#ffffff;
+  --textR-color:#1e1e1e;
+  --textS-color:#ffffff;
+  --bgm-color: #1e1e1e;
+  --main-color:#272727;
+  --sec-color:#181818;
+  --mainR-color:#ede6d9;
+  --sub-color:#747474;
+  --cl1-color:#444444;
+  --cl2-color:#313131;
+  --cl3-color:#959595;
+  --mode-color:#ffa600;
+  --glow:rgb(255, 115, 0);
+  --text-shadow: 0 0 10px #ffc400;
+  --t-color:#fcbf49;
+  --gradient-bg:
+  linear-gradient(127deg, var(--main-color), rgba(0, 0, 0, 0) 80.71%),
+  linear-gradient(217deg, var(--main-color), rgba(0, 0, 0, 0) 80.71%),  
+  url();
+  --transition1: 0.30s ease-in-out;
+  
+}
+
+#_body{
+  font-family: 'Roboto', sans-serif;  
+  background-color: var(--sec-color);
+  
+}
+
+a{color: #fff; text-decoration: none !important}
+
+#blank-page{min-height:50vh;max-width: 100vmax;}
+
+.c-pointer{
+  cursor: pointer;
+}
+
+::placeholder {
+  color: #fff;
+  opacity: 0.7; 
+}
+
+#profile_id{
+  width: fit-content;
+}
+
+#admin-dashboard{
+  min-height:100vh; max-width: 100vmax;
+  padding-top: 100px;
+  align-items: center;
+  align-content: center;
+}
+
+#add-product{
+  min-height:100vh; max-width: 100vmax;
+  padding-top: 100px;
+  align-items: center;
+  align-content: center;
+}
+
+#profile{
+  min-height:100vh; max-width: 100vmax;
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+#product-view{
+  min-height:100vh; max-width: 100vmax;
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+#products {
+  min-height:100vh; max-width: 100vmax;
+  align-items: center;
+}
+
+#cart {
+  min-height:100vh; max-width: 100vmax;
+  align-items: center;
+}
+
+#display{
+  min-height:50vh; max-width: 100vmax;
+  align-items: center;
+}
+
+footer {
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+.textuppercase{ text-transform: uppercase;}
+
+/**
+* !STRONG TEXT
+**/
+
+.textfxa{
+  color: var(--mainR-color);
+  text-shadow: 0 0 20px var(--s-color);
+}
+
+.textfxb{
+  color: var(--mode-color);
+  text-shadow: 0 0 20px var(--mainR-color);
+}
+
+.textfx{
+  text-transform: uppercase;
+  font-size: 3.2vh;
+  color: var(--mainR-color);
+  text-shadow: 0 0 20px var(--s-color);
+  font-weight: 900;
+  font-family: 'Roboto', sans-serif;
+}
+
+.banner{
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 900;
+  font-size:  11.2vw;
+  font-family: 'Roboto', sans-serif;
+}
+
+.logo, .logo .bowl-rice{
+  color: var(--mode-color);
+  text-shadow: 0 0 10px var(--glow);
+  font-weight: 600;
+  cursor: pointer;
+  font-size:  3.2vh;
+  text-transform: uppercase;
+}
+
+.productHighlight {
+  min-height: 100%;
+}
+
+.productHighlight .desc{
+  height: 20px;
+}
+
+.ellipsis {
+  text-overflow: ellipsis; /* enables ellipsis */
+  white-space: nowrap; /* keeps the text in a single line */
+  overflow: hidden; /* keeps the element from overflowing its parent */
+}
+
+#landing{
+  background: var(--gradient-bg), url('https://m-dorio.github.io/foodstore/images/landing-ramen.jpg');
+  /* background-image: url(https://m-dorio.github.io/foodstore/images/landing-ramen.jpg); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  color: #fff;
+  min-height: 50vh;
+  max-width: 100vmax;
+  background-color: var(--bgm-color);
+}
