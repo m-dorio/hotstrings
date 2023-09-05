@@ -1,5 +1,5 @@
 import Banner from '../components/Banner'
-import Footer from '../components/Footer'
+
 
 export default function Error() {
 
@@ -16,7 +16,7 @@ export default function Error() {
         <div className='d-flex justify-content-around align-items-center text-center text-warning vh-100'>
             <Banner data={data}/>
         </div>
-        <Footer />
+
         </>
 	)
 }

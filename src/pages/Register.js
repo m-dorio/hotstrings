@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import UserContext from '../UserContext';
 import { Navigate } from 'react-router-dom';
 import { Row, Col, Form, Button } from 'react-bootstrap';
-import Footer from '../components/Footer'
+
 import Swal from 'sweetalert2';
 
 export default function Register() {
@@ -188,7 +188,7 @@ export default function Register() {
         </Row>
        
         </div>
-        <Footer />
+
     </>
 	)
 }

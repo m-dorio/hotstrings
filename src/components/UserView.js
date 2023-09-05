@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import { Container, Row } from "react-bootstrap";
-import Footer from './Footer';
+import { Container, Row, Col} from "react-bootstrap";
+
 
 export default function UserView({productsData}) {
 
@@ -28,14 +28,14 @@ export default function UserView({productsData}) {
     }, [productsData])
 
     return(
-        <>
+        <div id="userview">
         <Container>
-            <Row className='pb-5'>
             <h2 className="text-center text-white mt-5">Available Products</h2>
+            <Row className='pb-5'>
                 { products }
             </Row>
         </Container>
-        <Footer />
-        </>
+
+        </div>
         )
 }

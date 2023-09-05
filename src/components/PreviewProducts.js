@@ -11,7 +11,7 @@ export default function Product(props){
 	const { _id, name, description, price, productImg } = data
 
 	return(
-		<Col xs={12} sm={12} md={6} lg={6} xl={breakPoint} className='mb-5'>
+		<Col xs={12} sm={12} md={12} lg={12} xl={breakPoint} className='mb-5'>
 			<Card data-bs-theme="dark" className = "productHighlight mx-2">
 				<Card.Body>
 				<Card.Img variant="top" src={`${productImg}`} />

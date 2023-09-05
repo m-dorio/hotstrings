@@ -15,8 +15,9 @@ export default function AddProduct(){
     const [name,setName] = useState("");
     const [description,setDescription] = useState("");
     const [price,setPrice] = useState("");
-    const [stocks,setStocks] = useState("");
-    const [productImg,setproductImg] = useState("");
+    const [productImg,setProductImg] = useState("");
+    const [quantity,setQuantity] = useState("");
+
 
     function createProduct(e){
 
@@ -38,8 +39,8 @@ export default function AddProduct(){
                 name: name,
                 description: description,
                 price: price,
-                stocks : stocks,
-                productImg : productImg
+                productImg : productImg,
+                quantity : quantity
             })
         })
         .then(res => res.json())
@@ -71,6 +72,8 @@ export default function AddProduct(){
 
         setName("")
         setDescription("")
+        setProductImg("")
+        setQuantity(0);
         setPrice(0);
     }
 
@@ -99,11 +102,11 @@ export default function AddProduct(){
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Image:</Form.Label>
-                            <Form.Control type="text" placeholder="Enter image URL" required value={productImg} onChange={e => {setproductImg(e.target.value)}}/>
+                            <Form.Control type="text" placeholder="Enter image URL" required value={productImg} onChange={e => {setProductImg(e.target.value)}}/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Stocks:</Form.Label>
-                            <Form.Control type="number" placeholder="Enter quantity" required value={stocks} onChange={e => {setStocks(e.target.value)}}/>
+                            <Form.Label>Quantity:</Form.Label>
+                            <Form.Control type="number" placeholder="Enter quantity" required value={quantity} onChange={e => {setQuantity(e.target.value)}}/>
                         </Form.Group>
                         <Button variant="warning" type="submit" className="my-5">Submit</Button>
                     </Form>     
@@ -114,7 +117,7 @@ export default function AddProduct(){
             <Footer />
            </>
             :
-            <Navigate to="/products" />
+            <Navigate to="/products/all" />
 
     )
 

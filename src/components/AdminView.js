@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
+import EditProduct from './EditProduct';
+import ArchiveProduct from './ArchiveProduct'
 
-export default function AdminView({ productsData }) {
+export default function AdminView({ productsData, fetchData }) {
 
     // b. Add state to store all products 
     const [products, setProducts] = useState([])
@@ -20,9 +22,9 @@ export default function AdminView({ productsData }) {
                     <td className={product.isActive ? "text-success" : "text-danger"}>
                         {product.isActive ? "Available" : "Unavailable"}
                     </td>
-                    <td>{product.stocks}</td>
-                    <td><button className="btn btn-primary ">Edit</button></td> 
-                    <td><button className="btn btn-danger">Archive</button></td>    
+                    <td>{product.quantity}</td>
+                    <td><EditProduct product={product._id} fetchData={fetchData}/></td> 
+                    <td><ArchiveProduct product={product._id} fetchData={fetchData} isActive={product.isActive}/></td>     
                 </tr>
                 )
         })
@@ -51,12 +53,16 @@ export default function AdminView({ productsData }) {
                     </tr>
                 </thead>
 
+           
                 <tbody>
+                     {/* from the products page */}
                     {products}
                 </tbody>
             </Table>   
             </div> 
+            
         </div>
+        
         </>
         )
 }

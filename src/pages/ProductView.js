@@ -3,7 +3,7 @@ import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import UserContext from "../UserContext";
-import Footer from '../components/Footer'
+
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ProductCard from '../components/ProductCard'
 import FeaturedProducts from '../components/FeaturedProducts'
@@ -20,7 +20,7 @@ export default function ProductView(){
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [img, setImage] = useState("");
-    let [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(0);
     const [items, setCart] = useState(0);
  
     const addToCart = (productId) => {
@@ -31,7 +31,7 @@ export default function ProductView(){
             Authorization: `Bearer ${localStorage.getItem('token')}`},
             body: JSON.stringify({
                 productId: productId,
-                quantity: items
+                quantity: quantity
             }),
         })
         .then((res) => res.json())
@@ -60,13 +60,13 @@ export default function ProductView(){
         fetch(`${process.env.REACT_APP_API_URL }/products/${productId}`)
     .then(res => res.json())
     .then(data => {
-        quantity = data.quantity
+        let item = data.quantity
         // console.log(data)
         setName(data.name);
         setDescription(data.description);
         setPrice(data.price);
         setImage(data.productImg);
-        setQuantity(quantity);
+        setQuantity(item);
    
     })
 }, [productId])
@@ -180,7 +180,7 @@ return (
       </Row>
     </Container>
     </div>
-    <Footer />
+  
     </>
   );
 }

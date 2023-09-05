@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Row, Container } from 'react-bootstrap';
-import Footer from '../components/Footer'
+
 import UserContext from '../UserContext';
 
 export default function Profile(){
@@ -16,7 +16,7 @@ export default function Profile(){
         
         </Row>
         </Container>
-        <Footer />
+
         </>
       );
 }

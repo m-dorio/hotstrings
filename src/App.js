@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Logout from './pages/Logout';
 import Profile from './pages/Profile';
 import Error from './pages/Error';
+import Footer from './components/Footer'
 
 import './App.css';
 import { UserProvider } from './UserContext';
@@ -77,6 +78,7 @@ function App() {
             <Route path="/logout" element={<Logout/>}/>
             <Route path="*" element={<Error/>} />
           </Routes>
+          <Footer />
         </Container>
       </Router> 
     </UserProvider>

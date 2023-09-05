@@ -1,14 +1,8 @@
-import Footer from '../components/Footer'
+
 import { Link } from 'react-router-dom';
 import FeaturedProducts from '../components/FeaturedProducts'
 import { Container, Row, Col , Card } from 'react-bootstrap';
 
-// const data = {
-//     title: "Zuitt Coding Bootcamp",
-//     content: "Opportunities for everyone, everywhere",
-//     destination: "/products",
-//     label: "Order now!"
-// }
 
 export default function Home() {
 
@@ -40,7 +34,7 @@ export default function Home() {
 			</Col>
 		</Row>
 		</Container>
-		<Footer />
+
 	
 		</>
 	)

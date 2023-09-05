@@ -57,30 +57,13 @@ a{color: #fff; text-decoration: none !important}
   width: fit-content;
 }
 
-#admin-dashboard{
+#admin-dashboard, #userview, #profile, #add-product, #product-view{
   min-height:100vh; max-width: 100vmax;
   padding-top: 100px;
   align-items: center;
   align-content: center;
 }
-
-#add-product{
-  min-height:100vh; max-width: 100vmax;
-  padding-top: 100px;
-  align-items: center;
-  align-content: center;
-}
-
-#profile{
-  min-height:100vh; max-width: 100vmax;
-  display: flex;
-  align-items: center;
-  align-content: center;
-}
-
-#product-view{
-  min-height:100vh; max-width: 100vmax;
-  display: flex;
+#product-card{
   align-items: center;
   align-content: center;
 }
@@ -105,6 +88,9 @@ footer {
   background-color: #333;
   color: #fff;
   padding: 10px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .textuppercase{ text-transform: uppercase;}

@@ -42,7 +42,7 @@ export default function ProductCard({productProp}) {
       }
 
     return(
-        <Col xs={12} md={6} lg={4} xl={3} className='my-3'>  
+        <Col id="product-card"  xs={12} md={6} lg={4} xl={4}  className='my-3'>  
             <Card data-bs-theme="dark" border="secondary" id='productComponent1' className='text-white productHighlight'>
                 <Card.Body>
                     <Card.Title className='text-center text-primary pb-1' >

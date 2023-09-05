@@ -3,7 +3,7 @@ import { Row, Col, Form, Button } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom'
 import UserContext from '../UserContext';
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer'
+
 
 export default function Login() {
 
@@ -151,6 +151,6 @@ return (
         </Row>
 
     </div>  
-    <Footer /></>
+</>
 )
 }

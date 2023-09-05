@@ -2,7 +2,7 @@
 import UserContext from '../UserContext';
 import {Row, Col, Container, Card} from 'react-bootstrap';
 import {useEffect, useContext } from 'react';
-import Footer from '../components/Footer'
+
 
 export default function Profile(){
 
@@ -62,13 +62,13 @@ export default function Profile(){
         </Col>
         </Row>
         </Container>
-        <Footer /></>
+       </>
 		:
 		<>
             <div className="text-center">
                 <h1>Page is not accessible.</h1>
             </div>
-            <Footer />
+
         </>
         
     )

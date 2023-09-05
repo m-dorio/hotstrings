@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
 import { Navigate } from "react-router-dom";
 import UserContext from '../UserContext';
-import Footer from '../components/Footer'
+
 
 export default function Logout(){
 
@@ -21,7 +21,7 @@ export default function Logout(){
     return(
         <>
           <Navigate to="/users/login" />
-          <Footer />
+    
         </>
       
     )
