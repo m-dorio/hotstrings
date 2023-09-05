@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import AppNavbar from './components/AppNavbar'
 import AddProduct from './components/AddProduct'
+import ProductCard from './components/ProductCard'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login';
@@ -65,9 +66,10 @@ function App() {
           <AppNavbar/>
           <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route exact="true" path="/products" element={<Products/>}/>
+            <Route path="/products" element={<Products/>}/>
+
             <Route path ="/products/add" element={<AddProduct/>}/>
-            <Route path="/products/:productId" element={<ProductView/>}/>
+            <Route exact="true" path="/products/:productId" element={<ProductView/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/users/register" element={<Register/>}/>

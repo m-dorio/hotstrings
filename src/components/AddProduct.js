@@ -15,6 +15,8 @@ export default function AddProduct(){
     const [name,setName] = useState("");
     const [description,setDescription] = useState("");
     const [price,setPrice] = useState("");
+    const [stocks,setStocks] = useState("");
+    const [productImg,setproductImg] = useState("");
 
     function createProduct(e){
 
@@ -24,7 +26,7 @@ export default function AddProduct(){
         let token = localStorage.getItem('token');
         console.log(token);
 
-        fetch(`${process.env.REACT_APP_API_URL}/products/`,{
+        fetch(`${process.env.REACT_APP_API_URL}/products/add`,{
 
             method: 'POST',
             headers: {
@@ -35,8 +37,9 @@ export default function AddProduct(){
 
                 name: name,
                 description: description,
-                price: price
-
+                price: price,
+                stocks : stocks,
+                productImg : productImg
             })
         })
         .then(res => res.json())
@@ -93,6 +96,14 @@ export default function AddProduct(){
                         <Form.Group>
                             <Form.Label>Price:</Form.Label>
                             <Form.Control type="number" placeholder="Enter Price" required value={price} onChange={e => {setPrice(e.target.value)}}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Image:</Form.Label>
+                            <Form.Control type="text" placeholder="Enter image URL" required value={productImg} onChange={e => {setproductImg(e.target.value)}}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Stocks:</Form.Label>
+                            <Form.Control type="number" placeholder="Enter quantity" required value={stocks} onChange={e => {setStocks(e.target.value)}}/>
                         </Form.Group>
                         <Button variant="warning" type="submit" className="my-5">Submit</Button>
                     </Form>     

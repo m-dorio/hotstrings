@@ -5,7 +5,8 @@ import Swal from 'sweetalert2';
 import UserContext from "../UserContext";
 import Footer from '../components/Footer'
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
+import ProductCard from '../components/ProductCard'
+import FeaturedProducts from '../components/FeaturedProducts'
 export default function ProductView(){
 
     const { user } = useContext(UserContext)
@@ -13,15 +14,15 @@ export default function ProductView(){
 
     // const navigate = useNavigate();
 
-    const{ productId} = useParams();
+    const{productId} = useParams();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [img, setImage] = useState("");
-    const [quantity, setQuantity] = useState(0);
+    let [quantity, setQuantity] = useState(0);
     const [items, setCart] = useState(0);
-    
+ 
     const addToCart = (productId) => {
         fetch(`${process.env.REACT_APP_API_URL}/cart/add`,{
             method: 'POST',
@@ -97,41 +98,84 @@ function remove() {
 
 }
 
+
 return (
   <>
   <div id="product-view" >
-    <Container className="">
+    <Container>
       <Row>
-        <Col lg={{ span: 6, offset: 3 }}>
-          <Card  className='bg-dark text-white productHighlight'>
+        <Col xs={12} lg={{ span: 6}}>
+          <Card className='bg-dark text-white productHighlight'>
           <Card.Body className="text-white">
             <Card.Title><h1>{name}</h1></Card.Title>
             <Card.Img variant="top" className='my-3 object-fit-cover border rounded' src={img}/>
-          
-            <Card.Subtitle>Price: {price}</Card.Subtitle>
-            <Card.Title>Description</Card.Title>
+            <Card.Title>Available: {inventory}</Card.Title>
+            <Card.Subtitle>Description:</Card.Subtitle>
             <Card.Text>{description}</Card.Text>
-
-            <Card.Footer className='d-flex align-items-center'>
-              <ButtonGroup aria-label="Basic example">
-                  <Button className='m-1 px-3' variant="danger" onClick={remove}>-</Button>
-                  <Card.Text className='m-1 px-1 h3'>{items}</Card.Text>
-                  <Button className='m-1 px-3' variant="warning" onClick={add}>+</Button>
-              </ButtonGroup>
-              <Card.Text className='mx-1 px-1 h3 text-warning'>Total: {subtotal}</Card.Text>
-            </Card.Footer>
-
-            {user.id !== null ? (
-              <Button variant="primary" onClick={() => addToCart(productId)}>
-                add to Cart
-              </Button>
-            ) : (
-              <Link className="btn btn-danger btn-block" to="/users/login">
-                Log in to view
-              </Link>
-            )}
+            <Card.Text className='h5 text-warning'>
+                    Price: {formatCurrency(price)}
+                    </Card.Text>
           </Card.Body>
+          <Card.Footer className='d-flex align-items-center justify-content-between'>
+                   
+                    {user.id !== null ? (
+                    <>
+                     <ButtonGroup aria-label="Basic example">
+                        <Button className='m-1 px-3' variant="danger" onClick={remove}>-</Button>
+                        <Card.Text className='m-1 px-1 h3'>{items}</Card.Text>
+                        <Button className='m-1 px-3' variant="warning" onClick={add}>+</Button>
+                    </ButtonGroup>
+                  
+                    <Button variant="success" onClick={() => addToCart(productId)}>
+                      Add to Cart
+                    </Button>
+
+                    <Link className="btn btn-primary d-block" to="/products">
+                      Back to Products
+                    </Link>
+                
+                    </>
+                  ) : (
+                    <>
+                     <ButtonGroup aria-label="Basic example">
+                        <Button className='m-1 px-3' variant="danger" onClick={remove}>-</Button>
+                        <Card.Text className='m-1 px-1 h3'>{items}</Card.Text>
+                        <Button className='m-1 px-3' variant="warning" onClick={add}>+</Button>
+                    </ButtonGroup>
+                    <Link className="btn btn-danger d-block" to="/users/login">
+                      Log in to order
+                    </Link>
+                    </>
+                  )}
+            </Card.Footer>
           </Card>
+        </Col>
+
+        <Col xs={12} lg={{ span: 6}}>
+          <Row>
+          <Col>
+          <Card className='bg-dark text-white productHighlight'>
+            <Card.Body className="text-white">
+              <Card.Subtitle><h1>Must try:</h1></Card.Subtitle>
+
+              <FeaturedProducts breakpoint={4}/>
+
+              </Card.Body>
+              </Card>
+          </Col>
+          </Row>
+
+          <Row>
+          <Col>
+          <Card className='bg-dark text-white productHighlight'>
+            <Card.Body className="text-white">
+              <Card.Subtitle><h1>Ratings:</h1></Card.Subtitle>
+              <Card.Subtitle>*****</Card.Subtitle>
+              <Card.Text>{description}</Card.Text>
+              </Card.Body>
+              </Card>
+          </Col>
+          </Row>
         </Col>
       </Row>
     </Container>

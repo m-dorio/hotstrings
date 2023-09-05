@@ -27,23 +27,23 @@ export default function AppNavbar() {
                         user.isAdmin 
                         ?
                         <>
-                            <Nav.Link className='mx-3' as={ NavLink } to="./products" exact="true">Manage Products</Nav.Link>
+                            <Nav.Link className='mx-3' as={ NavLink } to="/products" exact="true">Manage Products</Nav.Link>
                             <Nav.Link className='mx-3' as={Link} to="/products/add">Add Product</Nav.Link>
                             <Nav.Link className='mx-3' as={Link} to="/logout">Logout</Nav.Link>
                         </>
                         :
                         <>
                             <Nav.Link as={ NavLink } to="./products" exact="true">Products</Nav.Link>
-                            <Nav.Link className='mx-3' as={ NavLink } to="./profile" exact="true">Profile</Nav.Link>
-                            <Nav.Link className='mx-3' as={ NavLink } to="./cart" exact="true">Cart</Nav.Link>
-                            <Nav.Link className='ml-3' as={ NavLink } to="./logout" exact="true">Logout</Nav.Link>
+                            <Nav.Link className='mx-3' as={ NavLink } to="/profile" exact="true">Profile</Nav.Link>
+                            <Nav.Link className='mx-3' as={ NavLink } to="/cart" exact="true">Cart</Nav.Link>
+                            <Nav.Link className='ml-3' as={ NavLink } to="/logout" exact="true">Logout</Nav.Link>
                            
                         </>
                         :
                         <>
-                            <Nav.Link as={ NavLink } to="./products" exact="true">Products</Nav.Link>
-                            <Nav.Link className='mx-3' as={ NavLink } to="./users/login" exact="true">Login</Nav.Link>
-                            <Nav.Link as={ NavLink } to="./users/register" exact="true">Register</Nav.Link>
+                            <Nav.Link as={ NavLink } to="/products" exact="true">Products</Nav.Link>
+                            <Nav.Link className='mx-3' as={ NavLink } to="/users/login" exact="true">Login</Nav.Link>
+                            <Nav.Link as={ NavLink } to="/users/register" exact="true">Register</Nav.Link>
                         </>
                         }
                     </Nav>

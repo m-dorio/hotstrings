@@ -29,7 +29,7 @@ export default function UserView({productsData}) {
 
     return(
         <>
-        <Container fluid>
+        <Container>
             <Row className='pb-5'>
             <h2 className="text-center text-white mt-5">Available Products</h2>
                 { products }

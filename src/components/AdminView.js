@@ -20,6 +20,7 @@ export default function AdminView({ productsData }) {
                     <td className={product.isActive ? "text-success" : "text-danger"}>
                         {product.isActive ? "Available" : "Unavailable"}
                     </td>
+                    <td>{product.stocks}</td>
                     <td><button className="btn btn-primary ">Edit</button></td> 
                     <td><button className="btn btn-danger">Archive</button></td>    
                 </tr>
@@ -45,6 +46,7 @@ export default function AdminView({ productsData }) {
                         <th>Description</th>
                         <th>Price</th>
                         <th>Availability</th>
+                        <th>Quantity</th>
                         <th colSpan="2">Actions</th>
                     </tr>
                 </thead>

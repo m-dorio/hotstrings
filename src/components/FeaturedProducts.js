@@ -11,7 +11,7 @@ export default function FeaturedProducts(){
 		fetch(`${process.env.REACT_APP_API_URL}/products/allActive`)
 		.then(res=>res.json())
 		.then(data=>{
-			console.log(data)
+			// console.log(data)
 			const numbers = []
 			const featured = []
 
@@ -27,7 +27,7 @@ export default function FeaturedProducts(){
 		}
 
 		let productLength = 4;
- 		if (data.length < 4) { 
+ 		if (data.length < productLength) { 
 
 			productLength = data.length;   
         } else {
@@ -36,7 +36,7 @@ export default function FeaturedProducts(){
 
 		for(let i=0;i<productLength;i++){
 			generateRandomNums()
-			featured.push(<PreviewProducts data={data[numbers[i]]} key={data[numbers[i]]._id} breakPoint={2} />)
+			featured.push(<PreviewProducts data={data[numbers[i]]} key={data[numbers[i]].productId} breakPoint={3} />)
 		}
 
 		setPreviews(featured)
@@ -45,8 +45,8 @@ export default function FeaturedProducts(){
 
 	return(
 		<>
-			<h2 className="text-center text-white mt-5">Featured Products</h2>
-			<CardGroup className="justify-content-center">
+			
+			<CardGroup className="justify-content-center my-5">
 				{previews}
 			</CardGroup>
 		</>

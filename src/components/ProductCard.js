@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import formatCurrency from './FormatCurrency';
+import UserContext from '../UserContext';
+import {useEffect, useContext } from 'react';
 import '../App.css';
 
 export default function ProductCard({productProp}) {
@@ -11,14 +13,15 @@ export default function ProductCard({productProp}) {
     //     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'PHP' }).format(amount);
     //   }
 
-    // const { _id, name, description, price, productImg} = productProp;
-    const { _id, name, description, price, productImg} = productProp;
+    // const { productId, name, description, price, productImg} = productProp;
+    const { productId, name, description, price, productImg} = productProp;
 
+    const { user, setUser} = useContext(UserContext);
     const [items, setCart] = useState(0);
     const [inventory, setInventory] = useState(5);
-    const subtotal = formatCurrency(price * items);
+    const subtotal = price * items;
 
-    function addToCart() {
+    function add() {
         if (inventory > 0) {
           setCart((prevItems) => prevItems + 1);
           setInventory((prevInventory) => prevInventory - 1);
@@ -28,7 +31,7 @@ export default function ProductCard({productProp}) {
 
       }
       
-      function removeFromCart() {
+      function remove() {
         if (items > 0) {
           setCart((prevItems) => prevItems - 1);
           setInventory((prevInventory) => prevInventory + 1);
@@ -40,26 +43,43 @@ export default function ProductCard({productProp}) {
 
     return(
         <Col xs={12} md={6} lg={4} xl={3} className='my-3'>  
-            <Card border="secondary" id='productComponent1' className='bg-dark text-white productHighlight'>
+            <Card data-bs-theme="dark" border="secondary" id='productComponent1' className='text-white productHighlight'>
                 <Card.Body>
-                    <Link to={`/products/${_id}`}>
-                        <Card.Img variant="top" className='object-fit-cover border rounded' src={productImg} />
+                    <Card.Title className='text-center text-primary pb-1' >
+                    {name}
+                    </Card.Title>
+                    
+                    <Link to={`/products/${productId}`}>
+                        <Card.Img variant="top" className='object-fit-cover border rounded mb-2' src={productImg} />
                     </Link>
-                    <Card.Title className='text-center pt-3' >{name}</Card.Title>
+                   
+                    <Card.Title>Available: {inventory}</Card.Title>
                     <Card.Subtitle>Description:</Card.Subtitle>
                     <Card.Text className='desc ellipsis'>{description}</Card.Text>
-                    <Link className='btn btn-primary' to={`/products/${_id}`}>More Details</Link>
-                    <Card.Text>Available: {inventory} </Card.Text>
-                    <Card.Subtitle>Price: {formatCurrency(price)}</Card.Subtitle>                              
+                   
+
                 </Card.Body>
 
-                <Card.Footer className='d-flex align-items-center'>
-                    <ButtonGroup aria-label="Basic example">
-                        <Button className='m-1 px-3' variant="danger" onClick={removeFromCart}>-</Button>
-                        <Card.Text className='m-1 px-1 h3'>{items}</Card.Text>
-                        <Button className='m-1 px-3' variant="warning" onClick={addToCart}>+</Button>
-                    </ButtonGroup>
-                    <Card.Text className='mx-1 px-1 h3 text-warning'>Total: {subtotal}</Card.Text>
+                <Card.Footer className='d-flex align-items-center justify-content-between'>
+                   
+                    {user.id !== null ? (
+                    <>
+                    <Card.Text className='h5 text-warning'>
+                    Price: {formatCurrency(price)}
+                    </Card.Text>
+                    <Link className="my-2 btn btn-primary" to={`/products/${productId}`}>Details</Link>
+                
+                    </>
+                  ) : (
+                    <>
+                   
+                    <Link className="btn btn-danger" to="/users/login">
+                      Log in to order
+                    </Link>
+                    <Link className="my-2 btn btn-primary" to={`/products/${productId}`}>Details</Link>
+                
+                    </>
+                  )}
                 </Card.Footer>
             </Card>
         </Col>

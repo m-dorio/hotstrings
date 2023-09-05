@@ -11,7 +11,7 @@ export default function Product(props){
 	const { _id, name, description, price, productImg } = data
 
 	return(
-		<Col xs={12} md={breakPoint} className='my-5'>
+		<Col xs={12} sm={12} md={6} lg={6} xl={breakPoint} className='mb-5'>
 			<Card data-bs-theme="dark" className = "productHighlight mx-2">
 				<Card.Body>
 				<Card.Img variant="top" src={`${productImg}`} />
@@ -21,8 +21,10 @@ export default function Product(props){
 					<Card.Text className='desc ellipsis'>{description}</Card.Text>
 				</Card.Body>
 				<Card.Footer>
-					<h5 className="text-center">{formatCurrency(price)}</h5>
-					<Link className="my-2 btn btn-warning d-block" to={`/products/${_id}`}>Details</Link>
+					<h5 className='h4 text-warning text-center'>{formatCurrency(price)}</h5>
+
+					<Link className="my-2 btn btn-primary d-block" to={`/products/${_id}`}>Details</Link>
+
 				</Card.Footer>
 			</Card>
 		</Col>

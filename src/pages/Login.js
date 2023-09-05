@@ -37,9 +37,6 @@ export default function Login() {
     .then(res => res.json())
     .then(data => {
 
-    console.log("user:" + email)   
-    console.log("password:" + password)   
-   
     if(typeof data.access !== "undefined"){
         localStorage.setItem('token', data.access);
         // localStorage.setItem('email',email);
