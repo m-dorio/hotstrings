@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import EditProduct from './EditProduct';
 import ArchiveProduct from './ArchiveProduct'
 
-export default function AdminView({ productsData, fetchData }) {
+export default function AdminView({productsData, fetchData }) {
 
     // b. Add state to store all products 
     const [products, setProducts] = useState([])
@@ -23,9 +23,19 @@ export default function AdminView({ productsData, fetchData }) {
                         {product.isActive ? "Available" : "Unavailable"}
                     </td>
                     <td>{product.quantity}</td>
-                    <td><EditProduct product={product._id} fetchData={fetchData}/></td> 
-                    <td><ArchiveProduct product={product._id} fetchData={fetchData} isActive={product.isActive}/></td>     
-                </tr>
+                    <td>
+                        <tr>
+                            <td>
+                                <EditProduct product={product._id} fetchData={fetchData}/>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                                <ArchiveProduct product={product._id} fetchData={fetchData} isActive={product.isActive}/>
+                            </td>     
+                        </tr>
+                        </td>
+                    </tr>
                 )
         })
 
@@ -37,8 +47,7 @@ export default function AdminView({ productsData, fetchData }) {
     return(
         <>
         <div id="admin-dashboard">
-        <h1 className="text-center text-white my-4"> Admin Dashboard</h1>
-            <div>
+      
             <Table striped bordered hover responsive>
                 <thead>
                     <tr className="text-center">
@@ -53,14 +62,11 @@ export default function AdminView({ productsData, fetchData }) {
                     </tr>
                 </thead>
 
-           
                 <tbody>
                      {/* from the products page */}
                     {products}
                 </tbody>
             </Table>   
-            </div> 
-            
         </div>
         
         </>

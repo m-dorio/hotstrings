@@ -1,68 +1,65 @@
 // import { Navigate } from "react-router-dom";
 import UserContext from '../UserContext';
 import {Row, Col, Container, Card} from 'react-bootstrap';
-import {useEffect, useContext } from 'react';
+
+import { useState } from 'react';
+import EditProfile from '../components/EditProfile';
+
+export default function Profile({usersData, fetchData }){
 
 
-export default function Profile(){
+    const [user, setUsers] = useState([])
+	const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+	const [mobileNo, setMobileNo] = useState('');
+	const [email, setEmail] = useState(0);
+	const [userImg, setUserImg] = useState('');
+	const [showEdit, setShowEdit] = useState(false);
 
-    const { user, setUser} = useContext(UserContext);
-	//State hooks to store the values of the input fields
 
-	useEffect(() => {
-        setUser({
-            access: localStorage.getItem('token'),
-        })},[])
+    fetch(`${process.env.REACT_APP_API_URL}/users/details`,{
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${localStorage.getItem('token')}`
+        },
+    })
+    .then(res=>res.json())
+    .then(data=>{
+
+        setUsers(data._id);
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setMobileNo(data.mobileNo);
+        setEmail(data.email);
+        setUserImg(data.userImg);
+
+    },[usersData])
+
+
 
     return(
         (user.id !== null)?
-        <>
+        <div  id="profile">
         <Container>
         <Row>
-        <Col  id="profile" xs={12} md={{ span: 8, offset: 2 }} xl={{ span: 8, offset: 2 }} className='my-3' lg={{ span: 8, offset: 2 }}>
-        <Container>
-            <Row>
-                <Col>
-                <Card data-bs-theme="dark">
-                <Card.Img id="profile_id" variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkcGuCqZ2u6Titq_adqM1ceg5r7JoOc-_tjhCYvmg&s" />
-                    <Card.Title><h4 className='p-2'>Juan Delacruz</h4></Card.Title>
-                    <Card.Body>         
-                        <Card.Title>Contacts</Card.Title>
-                        <Card.Text>Mobile No: +631234567890</Card.Text>
-                    </Card.Body>
-                </Card>
-                </Col> 
-            </Row>
-            <Row>
-                <Col>
-                <Card data-bs-theme="dark">
-                <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkcGuCqZ2u6Titq_adqM1ceg5r7JoOc-_tjhCYvmg&s" />
-                    <Card.Body> 
-                    <Card.Title><h4 className='p-2'>Orders Detail</h4></Card.Title>        
-                        <Card.Title>Product</Card.Title>
-                        <Card.Text>Product List . . .</Card.Text>
-                    </Card.Body>
-                </Card>               
-                </Col>
-
-                <Col>
-                <Card data-bs-theme="dark">
-                <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkcGuCqZ2u6Titq_adqM1ceg5r7JoOc-_tjhCYvmg&s" />
-                    <Card.Body> 
-                    <Card.Title><h4 className='p-2'>Orders Detail</h4></Card.Title>        
-                        <Card.Title>Product</Card.Title>
-                        <Card.Text>Product List . . .</Card.Text>
-                    </Card.Body>
-                </Card>               
-                </Col>  
-    
-                   
-            </Row>
-            </Container>   
-        </Col>
+        <Col xs={12} md={{ span: 8, offset: 2 }} xl={{ span: 8, offset: 2 }} className='my-3' lg={{ span: 8, offset: 2 }}>
+      
+        <Card data-bs-theme="dark">
+        <EditProfile user={user} fetchData={fetchData} />
+        {/* <Card.Title><h6 className='p-2 text-center'>User: {userId}</h6></Card.Title> */}
+        <Card.Img id="profile_img" className='object-fit-cover' src={userImg} />
+        <Card.Title><h1 className='p-2 text-center'>{firstName} {lastName}</h1></Card.Title>
+            <Card.Body>         
+                <Card.Title>Contacts</Card.Title>
+                <Card.Text>Mobile Number: {mobileNo}</Card.Text>
+                <Card.Text>Email: {email}</Card.Text>
+            </Card.Body>
+        </Card>
+        </Col> 
         </Row>
+
         </Container>
-       </>
+       </div>
 		:
 		<>
             <div className="text-center">

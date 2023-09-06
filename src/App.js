@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import AppNavbar from './components/AppNavbar'
 import AddProduct from './components/AddProduct'
-import ProductCard from './components/ProductCard'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login';

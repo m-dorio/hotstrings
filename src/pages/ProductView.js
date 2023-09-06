@@ -3,11 +3,15 @@ import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import UserContext from "../UserContext";
-
+import formatCurrency from '../components/FormatCurrency';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ProductCard from '../components/ProductCard'
 import FeaturedProducts from '../components/FeaturedProducts'
-export default function ProductView(){
+import Pagination from 'react-bootstrap/Pagination';
+import EditProduct from '../components/EditProduct';
+import ArchiveProduct from '../components/ArchiveProduct'
+
+export default function ProductView({productsData, fetchData }){
 
     const { user } = useContext(UserContext)
     // The "useParams" hook allows us to retieve the productId passed via the URL
@@ -15,14 +19,47 @@ export default function ProductView(){
     // const navigate = useNavigate();
 
     const{productId} = useParams();
-
+    const [id, setProductId] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [img, setImage] = useState("");
+    //user item in cart to be save
+    const [itemsToBuy, setItemsToBuy] = useState(0);
+    //user item in cart
     const [quantity, setQuantity] = useState(0);
-    const [items, setCart] = useState(0);
- 
+    //product stocks left 
+    const [inventory, setInventory] = useState(0);
+
+    const subtotal = formatCurrency(price * quantity);
+
+
+    let active = 1;
+    let items = [];
+    for (let number = 1; number <= 5; number++) {
+      items.push(
+        <Pagination.Item key={number} active={number === active}>
+          {number}
+        </Pagination.Item>,
+      );
+    }
+      const updateProduct = (productId) =>{
+
+            fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`,{
+              method: 'POST',
+              headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem('token')}`},
+              body: JSON.stringify({
+                  productId: productId,
+                  quantity: quantity - itemsToBuy
+              })
+      })
+     
+        console.log("Im here!")
+        reset();
+      }
+
     const addToCart = (productId) => {
         fetch(`${process.env.REACT_APP_API_URL}/cart/add`,{
             method: 'POST',
@@ -31,19 +68,22 @@ export default function ProductView(){
             Authorization: `Bearer ${localStorage.getItem('token')}`},
             body: JSON.stringify({
                 productId: productId,
-                quantity: quantity
+                quantity: itemsToBuy
             }),
         })
         .then((res) => res.json())
         .then((data) => {
-                console.log(data)
 
-                if (data.message = 'Added to Cart Successfully.'){
+        
+
+               if (data.message = 'Added to Cart Successfully.'){
+             
                     Swal.fire({
                         title: "Successfully added.",
                         icon: 'success',
                         text: "You have successfully added the product."
                     });
+                    updateProduct();
                 }
                 else{
                     Swal.fire({
@@ -51,36 +91,45 @@ export default function ProductView(){
                         icon: 'error',
                         text: "Please try again."
                     })
+                  
                 }
             })
+
+
+        
     }
 
+   
+
+    let [item, setItem] = useState(0);
+
     useEffect(() => {
-        console.log(productId);
+      
         fetch(`${process.env.REACT_APP_API_URL }/products/${productId}`)
     .then(res => res.json())
     .then(data => {
-        let item = data.quantity
+      //item is just a placeholder
+        item = data.quantity
         // console.log(data)
         setName(data.name);
         setDescription(data.description);
         setPrice(data.price);
         setImage(data.productImg);
-        setQuantity(item);
-   
+        setItemsToBuy(itemsToBuy);
+        setInventory(data.quantity - itemsToBuy);
+        // This quantity is hidden and will save items to their cart
+        setItem(data.quantity); 
+        setQuantity(data.quantity);
     })
+
+   
+
 }, [productId])
 
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'PHP' }).format(amount);
-}
-
-const [inventory, setInventory] = useState(5);
-const subtotal = formatCurrency(price * items);
 
 function add() {
   if (inventory > 0) {
-    setCart((prevItems) => prevItems + 1);
+    setItemsToBuy((prevItems) => prevItems + 1);
     setInventory((prevInventory) => prevInventory - 1);
   } else {
     return;
@@ -89,14 +138,21 @@ function add() {
 }
 
 function remove() {
-  if (items > 0) {
-    setCart((prevItems) => prevItems - 1);
+  if (itemsToBuy > 0) {
+    setItemsToBuy((prevItems) => prevItems - 1);
     setInventory((prevInventory) => prevInventory + 1);
   } else {
     return;
   }
 
 }
+
+function reset() {
+  setQuantity(0);
+  setItemsToBuy(0);
+  setInventory(item);
+}
+
 
 
 return (
@@ -107,14 +163,20 @@ return (
         <Col xs={12} lg={{ span: 6}}>
           <Card className='bg-dark text-white productHighlight'>
           <Card.Body className="text-white">
-            <Card.Title><h1>{name}</h1></Card.Title>
+            <Card.Title><h1 className="text-warning">{name}</h1></Card.Title>
             <Card.Img variant="top" className='my-3 object-fit-cover border rounded' src={img}/>
-            <Card.Title>Available: {inventory}</Card.Title>
-            <Card.Subtitle>Description:</Card.Subtitle>
-            <Card.Text>{description}</Card.Text>
-            <Card.Text className='h5 text-warning'>
-                    Price: {formatCurrency(price)}
-                    </Card.Text>
+            <Card.Title><span className="text-warning h3">Available:</span> <span className="text-white h3">{inventory}</span></Card.Title>
+            <Card.Title><span className="text-warning">Description:</span></Card.Title>
+              <Card.Text>{description}</Card.Text>
+                <div className='d-flex align-items-center justify-content-between'>
+                  <Card.Text>
+                  <span className='h4 text-white'>Price: {formatCurrency(price)}</span>
+                  </Card.Text>
+                  
+                  <Card.Text>
+                  <span className='h4 text-warning'>Total: {subtotal}</span>
+                  </Card.Text>
+                </div>
           </Card.Body>
           <Card.Footer className='d-flex align-items-center justify-content-between'>
                    
@@ -122,26 +184,34 @@ return (
                     <>
                      <ButtonGroup aria-label="Basic example">
                         <Button className='m-1 px-3' variant="danger" onClick={remove}>-</Button>
-                        <Card.Text className='m-1 px-1 h3'>{items}</Card.Text>
+                        <Card.Text className='m-1 px-1 h3'>{itemsToBuy}</Card.Text>
                         <Button className='m-1 px-3' variant="warning" onClick={add}>+</Button>
                     </ButtonGroup>
-                  
+
+                    <Link className="btn btn-danger d-block" onClick={() => reset()}>
+                      Reset
+                    </Link>
+
+
                     <Button variant="success" onClick={() => addToCart(productId)}>
                       Add to Cart
                     </Button>
 
-                    <Link className="btn btn-primary d-block" to="/products">
-                      Back to Products
-                    </Link>
+                   
                 
                     </>
                   ) : (
                     <>
                      <ButtonGroup aria-label="Basic example">
                         <Button className='m-1 px-3' variant="danger" onClick={remove}>-</Button>
-                        <Card.Text className='m-1 px-1 h3'>{items}</Card.Text>
+                        <Card.Text className='m-1 px-1 h3'>{itemsToBuy}</Card.Text>
                         <Button className='m-1 px-3' variant="warning" onClick={add}>+</Button>
                     </ButtonGroup>
+
+                    <Card.Text className='h5 text-warning'>
+                    Total: {subtotal}
+                    </Card.Text>
+
                     <Link className="btn btn-danger d-block" to="/users/login">
                       Log in to order
                     </Link>
@@ -156,10 +226,8 @@ return (
           <Col>
           <Card className='bg-dark text-white productHighlight'>
             <Card.Body className="text-white">
-              <Card.Subtitle><h1>Must try:</h1></Card.Subtitle>
-
-              <FeaturedProducts breakpoint={4}/>
-
+            <Card.Text><span className="h4 text-warning">Must try:</span></Card.Text>
+            <FeaturedProducts breakpoint={4}/>
               </Card.Body>
               </Card>
           </Col>
@@ -168,10 +236,12 @@ return (
           <Row>
           <Col>
           <Card className='bg-dark text-white productHighlight'>
-            <Card.Body className="text-white">
-              <Card.Subtitle><h1>Ratings:</h1></Card.Subtitle>
-              <Card.Subtitle>*****</Card.Subtitle>
+            <Card.Body>
+              <Card.Subtitle><span className="h4 text-warning">Ratings:</span> <span>8/10</span> </Card.Subtitle>
+            
               <Card.Text>{description}</Card.Text>
+              <Pagination>{items}</Pagination>
+
               </Card.Body>
               </Card>
           </Col>

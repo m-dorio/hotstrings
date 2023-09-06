@@ -53,13 +53,37 @@ a{color: #fff; text-decoration: none !important}
   opacity: 0.7; 
 }
 
-#profile_id{
-  width: fit-content;
+#profile{
+  display: flex;
+  margin: auto !important;
+  align-items: center;
+  align-content: center;
 }
+
+#profile_img{
+  width: 40vh;
+  height: 45vh;
+  padding: 20px 0px;
+  border-radius: 20%;
+  margin: auto;
+  align-items: center;
+  align-content: center;
+}
+
+#profile_thumbnail{
+  width: 40vh;
+  height: 45vh;
+  padding: 20px 0px;
+  border-radius: 20%;
+  margin: auto;
+  align-items: center;
+  align-content: center;
+}
+
 
 #admin-dashboard, #userview, #profile, #add-product, #product-view{
   min-height:100vh; max-width: 100vmax;
-  padding-top: 100px;
+  padding-top: 20px;
   align-items: center;
   align-content: center;
 }

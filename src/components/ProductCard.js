@@ -2,19 +2,13 @@ import { useState } from 'react'
 import {Col, Card, Button}  from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import formatCurrency from './FormatCurrency';
 import UserContext from '../UserContext';
-import {useEffect, useContext } from 'react';
+import {useContext } from 'react';
 import '../App.css';
 
 export default function ProductCard({productProp}) {
-    // const formatCurrency = (amount) => {
-    //     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'PHP' }).format(amount);
-    //   }
-
-    // const { productId, name, description, price, productImg} = productProp;
-    const { productId, name, description, price, productImg} = productProp;
+    const { _id, name, description, price, quantity, productImg} = productProp;
 
     const { user, setUser} = useContext(UserContext);
     const [items, setCart] = useState(0);
@@ -49,14 +43,12 @@ export default function ProductCard({productProp}) {
                     {name}
                     </Card.Title>
                     
-                    <Link to={`/products/${productId}`}>
+                    <Link to={`/products/${_id}`}>
                         <Card.Img variant="top" className='object-fit-cover border rounded mb-2' src={productImg} />
                     </Link>
-                   
-                    <Card.Title>Available: {inventory}</Card.Title>
-                    <Card.Subtitle>Description:</Card.Subtitle>
+                    <Card.Title><span className="text-warning h3">Available:</span> <span className="text-white h3">{quantity}</span></Card.Title>
+                    <Card.Title><span className="text-warning">Description:</span></Card.Title>
                     <Card.Text className='desc ellipsis'>{description}</Card.Text>
-                   
 
                 </Card.Body>
 
@@ -67,7 +59,7 @@ export default function ProductCard({productProp}) {
                     <Card.Text className='h5 text-warning'>
                     Price: {formatCurrency(price)}
                     </Card.Text>
-                    <Link className="my-2 btn btn-primary" to={`/products/${productId}`}>Details</Link>
+                    <Link className="my-2 btn btn-primary" to={`/products/${_id}`}>Details</Link>
                 
                     </>
                   ) : (
@@ -76,7 +68,7 @@ export default function ProductCard({productProp}) {
                     <Link className="btn btn-danger" to="/users/login">
                       Log in to order
                     </Link>
-                    <Link className="my-2 btn btn-primary" to={`/products/${productId}`}>Details</Link>
+                    <Link className="my-2 btn btn-primary" to={`/products/${_id}`}>Details</Link>
                 
                     </>
                   )}

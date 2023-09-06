@@ -45,7 +45,6 @@ export default function FeaturedProducts(){
 
 	return(
 		<>
-			
 			<CardGroup className="justify-content-center my-5">
 				{previews}
 			</CardGroup>
