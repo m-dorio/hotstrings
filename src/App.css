@@ -40,6 +40,11 @@
   
 }
 
+.form-range{
+  width: 80% !important;
+  height: 10px !important;
+}
+
 a{color: #fff; text-decoration: none !important}
 
 #blank-page{min-height:50vh;max-width: 100vmax;}

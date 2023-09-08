@@ -1,63 +1,59 @@
-// import { Navigate } from "react-router-dom";
-import UserContext from '../UserContext';
-import {Row, Col, Container, Card} from 'react-bootstrap';
+import {useState, useEffect } from 'react';
+import {Row, Col, Container, Card, Button} from 'react-bootstrap';
+import ResetPassword from '../components/ResetPassword';
+import UpdateProfile from '../components/UpdateProfile'
 
-import { useState } from 'react';
-import EditProfile from '../components/EditProfile';
+export default function Profile(){
 
-export default function Profile({usersData, fetchData }){
+    const [ details, setDetails ] = useState({})
 
+    useEffect(()=>{
 
-    const [user, setUsers] = useState([])
-	const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-	const [mobileNo, setMobileNo] = useState('');
-	const [email, setEmail] = useState(0);
-	const [userImg, setUserImg] = useState('');
-	const [showEdit, setShowEdit] = useState(false);
+        fetch(`${process.env.REACT_APP_API_URL}/users/details`,{
+            headers:{
+                Authorization: `Bearer ${ localStorage.getItem('token')}`
+            }
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            // console.log(data)
+            if(typeof data.id !== undefined){
+                setDetails(data);
+            }
+        })
+    },[details])
 
+    if (details.userImg == "")
+    {details.userImg="https://cdn.dribbble.com/users/9685/screenshots/997495/avatarzzz.gif"}
 
-    fetch(`${process.env.REACT_APP_API_URL}/users/details`,{
-        headers:{
-            'Content-Type':'application/json',
-            'Authorization':`Bearer ${localStorage.getItem('token')}`
-        },
-    })
-    .then(res=>res.json())
-    .then(data=>{
+    return (
 
-        setUsers(data._id);
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
-        setMobileNo(data.mobileNo);
-        setEmail(data.email);
-        setUserImg(data.userImg);
-
-    },[usersData])
-
-
-
-    return(
-        (user.id !== null)?
-        <div  id="profile">
+        (details.id !== null)?
+        <div id="profile">
         <Container>
         <Row>
+
+        {/* <Button variant="primary" size="sm" onClick={openEdit}>Edit</Button> */}
         <Col xs={12} md={{ span: 8, offset: 2 }} xl={{ span: 8, offset: 2 }} className='my-3' lg={{ span: 8, offset: 2 }}>
-      
         <Card data-bs-theme="dark">
-        <EditProfile user={user} fetchData={fetchData} />
-        {/* <Card.Title><h6 className='p-2 text-center'>User: {userId}</h6></Card.Title> */}
-        <Card.Img id="profile_img" className='object-fit-cover' src={userImg} />
-        <Card.Title><h1 className='p-2 text-center'>{firstName} {lastName}</h1></Card.Title>
+        {/* <EditProfile user={user} fetchData={fetchData} /> */}
+     
+        <Card.Img id="profile_img" className='object-fit-cover' src={details.userImg} />
+        <Card.Title><h1 className='p-2 text-center'>{details.firstName} {details.lastName}</h1></Card.Title>
             <Card.Body>         
                 <Card.Title>Contacts</Card.Title>
-                <Card.Text>Mobile Number: {mobileNo}</Card.Text>
-                <Card.Text>Email: {email}</Card.Text>
+                <Card.Text>Mobile Number: {details.mobileNo}</Card.Text>
+                <Card.Text>Email: {details.email}</Card.Text>
             </Card.Body>
+            <Card.Footer>         
+                <div className='d-flex align-items-center justify-content-between'>
+                <UpdateProfile/>
+                <ResetPassword />
+                </div>
+            </Card.Footer>         
         </Card>
         </Col> 
         </Row>
-
         </Container>
        </div>
 		:
@@ -67,6 +63,5 @@ export default function Profile({usersData, fetchData }){
             </div>
 
         </>
-        
     )
 }

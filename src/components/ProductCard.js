@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {Col, Card, Button}  from 'react-bootstrap'
+import {Container, Row, Col, Card, Button}  from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import formatCurrency from './FormatCurrency';
@@ -36,7 +36,8 @@ export default function ProductCard({productProp}) {
       }
 
     return(
-        <Col id="product-card"  xs={12} md={6} lg={4} xl={4}  className='my-3'>  
+          <>
+        <Col md={4}>
             <Card data-bs-theme="dark" border="secondary" id='productComponent1' className='text-white productHighlight'>
                 <Card.Body>
                     <Card.Title className='text-center text-primary pb-1' >
@@ -74,7 +75,9 @@ export default function ProductCard({productProp}) {
                   )}
                 </Card.Footer>
             </Card>
-        </Col>
+      
+            </Col>
+            </>
         )
     }
 

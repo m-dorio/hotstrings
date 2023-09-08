@@ -9,7 +9,7 @@ export default function Products() {
 
   const fetchData = () => {
     // Retrieve all active products from the API
-    fetch(`${process.env.REACT_APP_API_URL}/products/all`)
+    fetch(`${process.env.REACT_APP_API_URL}/products/`)
       .then((res) => res.json())
       .then((data) => {
         

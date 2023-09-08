@@ -21,10 +21,7 @@ export default function Product(props){
 					<Card.Text className='desc ellipsis'>{description}</Card.Text>
 				</Card.Body>
 				<Card.Footer>
-					{/* <h5 className='h4 text-warning text-center'>{formatCurrency(price)}</h5> */}
-
 					<Link className="my-2 btn btn-primary d-block" to={`/products/${_id}`}>Details</Link>
-
 				</Card.Footer>
 			</Card>
 		</Col>

@@ -22,6 +22,7 @@ export default function Register() {
 	const [lastName,setLastName] = useState("");
     const [email,setEmail] = useState("");
     const [mobileNo,setMobileNo] = useState("");
+    const [userImg,setUserImg] = useState("");
     const [password,setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");	
 
@@ -45,8 +46,8 @@ export default function Register() {
     			lastName: lastName,
     			email: email,
     			mobileNo: mobileNo,
-    			password: password
-
+    			password: password,
+                userImg: userImg
     		})
     	})
     	.then(res=>res.json())
@@ -59,6 +60,7 @@ export default function Register() {
     			setEmail('');
     			setMobileNo('');
     			setPassword('');
+                setUserImg('https://cdn.dribbble.com/users/9685/screenshots/997495/avatarzzz.gif')
     			setConfirmPassword('')
     		
                 Swal.fire({
@@ -97,10 +99,13 @@ export default function Register() {
 
 	// console.log(user.access)
 
+    // if (userImg == "")
+    // {setUserImg('https://cdn.dribbble.com/users/9685/screenshots/997495/avatarzzz.gif')}
+    
 	return(
 
         (user.id !==null)?
-        <Navigate to="/products/all" />
+        <Navigate to="/products/" />
 		:
 		<>
 
@@ -150,6 +155,17 @@ export default function Register() {
                         placeholder="Enter 11-digit No."
                         required
                         value={mobileNo}
+                        onChange={e=>{setMobileNo(e.target.value)}}
+                    />
+                </Form.Group>
+
+                <Form.Group className='mt-3'>
+                    <Form.Label>Profile Picture:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter Image URL"
+                        required
+                        value={userImg}
                         onChange={e=>{setMobileNo(e.target.value)}}
                     />
                 </Form.Group>
