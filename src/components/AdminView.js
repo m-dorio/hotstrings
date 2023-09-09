@@ -23,19 +23,15 @@ export default function AdminView({productsData, fetchData }) {
                         {product.isActive ? "Available" : "Unavailable"}
                     </td>
                     <td>{product.quantity}</td>
+                    <td>{product.ratings}</td>
                     <td>
-                        <tr>
-                            <td>
-                                <EditProduct product={product._id} fetchData={fetchData}/>
-                            </td> 
-                        </tr>
-                        <tr>
-                            <td>
-                                <ArchiveProduct product={product._id} fetchData={fetchData} isActive={product.isActive}/>
-                            </td>     
-                        </tr>
-                        </td>
-                    </tr>
+                    <EditProduct product={product._id} fetchData={fetchData}/>
+                    </td> 
+                    
+                    <td>
+                    <ArchiveProduct product={product._id} fetchData={fetchData} isActive={product.isActive}/>
+                    </td>     
+                </tr>
                 )
         })
 
@@ -58,6 +54,7 @@ export default function AdminView({productsData, fetchData }) {
                         <th>Price</th>
                         <th>Availability</th>
                         <th>Quantity</th>
+                        <th>Ratings</th>
                         <th colSpan="2">Actions</th>
                     </tr>
                 </thead>

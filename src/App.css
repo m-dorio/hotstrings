@@ -41,11 +41,11 @@
 }
 
 .form-range{
-  width: 80% !important;
-  height: 10px !important;
+  width: 100% !important;
 }
 
 a{color: #fff; text-decoration: none !important}
+li{list-style: none;}
 
 #blank-page{min-height:50vh;max-width: 100vmax;}
 
@@ -86,7 +86,7 @@ a{color: #fff; text-decoration: none !important}
 }
 
 
-#admin-dashboard, #userview, #profile, #add-product, #product-view{
+#admin-dashboard, #userview, #profile, #add-product, .product-view{
   min-height:100vh; max-width: 100vmax;
   padding-top: 20px;
   align-items: center;

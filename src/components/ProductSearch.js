@@ -8,8 +8,6 @@ const ProductSearch = () => {
   // State variables
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [minPrice, setMinPrice] = useState(1);
-  const [maxPrice, setMaxPrice] = useState(999);
   const [products, setProducts] = useState([]);
 
   const searchByName = async () => {
@@ -22,103 +20,47 @@ const ProductSearch = () => {
         body: JSON.stringify({ productName: searchQuery })
       });
       const data = await response.json();
-      setSearchResults(data);
+      setProducts(data);
 
     } catch (error) {
       console.error('Error searching for products by name:', error);
     }
   };
   
-  const searchByPrice = () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ minPrice, maxPrice }),
-    };
-  
-    fetch(`${process.env.REACT_APP_API_URL}/products/searchByPrice`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.products);
-        console.log(data.products);
-
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
-  
   useEffect(() => {
     searchByName();
-    searchByPrice();
-  }, [searchQuery, maxPrice]);
-
-  const handleChange = (event) => {
-    setMinPrice(1);
-    setMaxPrice(event.target.value);
-  };
+}, [searchQuery]);
 
 
   return (
-    <>
-   
-  <Container>
-    <Row>
-      <Col className='text-white my-5 px-5'>
-       
-        <Container>
-          <Row>
-            <Col>         
-              <h3>List By Price:</h3>
-                    <input
-                      type="range"
-                      id="price"
-                      className="form-range"
-                      min={1}
-                      max={999}
-                      value={maxPrice}
-                      onChange={handleChange}
-                    />
-                    <h3>{FormatCurrency(maxPrice)}</h3>
-                {products.map((product) => (
-                
-                <div className='p-1' key={product.id}>
-                <li className="my-1">
-                  <Link className='btn btn-success text-white' to={`/products/${product._id}`}> {product.name} - {FormatCurrency(product.price)}</Link>
-                </li>
-                </div>
-              ))}
-            </Col>
-
-            <Col>
-              <Form.Group>
-              <h3>Product Search</h3>
-
-            <label htmlFor="productName">Product Name:</label>
-              <input
-              type="text"
-              id="productName"
-              className="form-control"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-              />
-
-             
-              </Form.Group>
-            </Col>
-          </Row>
-        </Container>
-       
+    <Container fluid>
+    <Row className="justify-content-center text-white">
+      <Col sm={12} md={8} lg={6} className="p-2">
+        <Form.Group>
+          <h3><i className="bowl-rice fa-solid fa-bowl-rice"></i> Search</h3>
+          <input
+            type="text"
+            id="productName"
+            className="form-control"
+            value={searchQuery}
+            placeholder='Search by name'
+            onChange={(event) => setSearchQuery(event.target.value)}
+          />
+        </Form.Group>
       </Col>
     </Row>
-    <Row>
-      {searchResults.map((product) => (
-        <ProductCard key={product._id} productProp={product} />
+    <Row className="justify-content-center">
+      {products.map((product) => (
+        <Col key={product._id} xs={12} sm={6} md={4} lg={3} className="mb-4">
+          <Link className='btn btn-dark text-white' to={`/products/${product._id}`}>
+          {product.name}
+            <img className='img-fluid border rounded mb-2' src={product.productImg} alt={product.name} />
+            <i className="bowl-rice fa-solid fa-bowl-rice"></i> - {FormatCurrency(product.price)}
+          </Link>
+        </Col>
       ))}
     </Row>
   </Container>
-
-  </>
   );
 };
 

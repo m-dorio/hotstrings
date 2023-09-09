@@ -36,7 +36,7 @@ export default function FeaturedProducts(){
 
 		for(let i=0;i<productLength;i++){
 			generateRandomNums()
-			featured.push(<PreviewProducts data={data[numbers[i]]} key={data[numbers[i]].productId} breakPoint={3} />)
+			featured.push(<PreviewProducts productData={data[numbers[i]]} key={data[numbers[i]]._id} breakPoint={3} />)
 		}
 
 		setPreviews(featured)

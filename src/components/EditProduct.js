@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 
 export default function EditProduct({product,fetchData}){
 
-
 	const [productId, setProductId] = useState('');
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -13,7 +12,7 @@ export default function EditProduct({product,fetchData}){
 	const [productImg, setProductImg] = useState('');
 	const [quantity, setQuantity] = useState(0);
 	const [showEdit, setShowEdit] = useState(false);
-
+	const [ratings, setRating] = useState([]);
 
 	const openEdit = (productId) =>{
 
@@ -27,6 +26,7 @@ export default function EditProduct({product,fetchData}){
 			setPrice(data.price);
 			setProductImg(data.productImg);
 			setQuantity(data.quantity);
+			setRating(data.ratings);
 		})
 
 			setShowEdit(true);
@@ -41,7 +41,7 @@ export default function EditProduct({product,fetchData}){
 		setProductImg('');
 		setPrice(0);
 		setQuantity(0);
-
+		setRating([]);
 	}
 
 	const editProduct = (e, productId)=>{
@@ -60,7 +60,8 @@ export default function EditProduct({product,fetchData}){
                 description: description,
                 price: price,
                 productImg : productImg,
-                quantity : quantity
+                quantity : quantity,
+				ratings : ratings
 			})
 		})
 		.then(res=>res.json())
@@ -133,10 +134,19 @@ export default function EditProduct({product,fetchData}){
 						<Form.Group controlId="setProductImg">
 							<Form.Label>Img Url</Form.Label>
 							<Form.Control
-								type="string"
+								type="text"
 								value={productImg}
 								onChange={e=>setProductImg(e.target.value)}
 								required/>
+						</Form.Group>
+
+						<Form.Group controlId="productRating">
+							<Form.Label>Ratings:</Form.Label>
+							<Form.Control
+								type="text"
+								value={ratings}
+								onChange={e=>setRating(e.target.value)}
+								disabled/>
 						</Form.Group>
 
 						<Form.Group controlId="productQuantity">
