@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function Product({ breakPoint, productData }) {
+export default function PreviewProducts({ breakPoint, productData }) {
   const { _id, name, description, price, productImg } = productData;
+
 
   return (
     <Col xs={12} sm={12} md={6} lg={6} xl={breakPoint} className="mb-1">

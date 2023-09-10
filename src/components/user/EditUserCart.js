@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
-export default function ArchiveProduct({product, fetchData, isActive}){
+export default function EditUserCart({ product, fetchData, isActive}){
 
 	const archiveToggle = (e, product)=>{
 
 		e.preventDefault();
 
-		fetch(`${process.env.REACT_APP_API_URL}/products/${product}/archive`,{
+		fetch(`${process.env.REACT_APP_API_URL}/cart/${product}/archive`,{
 
 			method:'PUT',
 			headers:{
@@ -47,7 +47,7 @@ export default function ArchiveProduct({product, fetchData, isActive}){
 
 		e.preventDefault();
 
-		fetch(`${process.env.REACT_APP_API_URL}/products/${product}/activate`,{
+		fetch(`${process.env.REACT_APP_API_URL}/cart/${product}/activate`,{
 
 			method:'PUT',
 			headers:{

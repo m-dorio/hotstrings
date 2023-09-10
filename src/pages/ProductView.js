@@ -142,8 +142,7 @@ export default function ProductView({ productsData, fetchData }) {
                             <Row>
                                         <Col className='d-flex align-items-center justify-content-between'>
                                             {user.id !== null ? (
-                                                <>
-                                                
+                                                 <>
                                                     <ButtonGroup aria-label="Basic example">
                                                         <Button className='m-1 px-3' variant="danger" onClick={remove}>-</Button>
                                                         <Card.Text className='m-1 px-1 h3'>{itemsToBuy}</Card.Text>
@@ -156,8 +155,7 @@ export default function ProductView({ productsData, fetchData }) {
                                                     <Link className="btn btn-danger d-block" onClick={() => reset()}>
                                                         Reset
                                                     </Link>
-                                                   
-                                                </>
+                                                    </>
                                             ) : (
                                                 <>
                                                     <Link className="btn btn-danger d-block" to="/users/login">

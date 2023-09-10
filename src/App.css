@@ -172,6 +172,18 @@ footer {
   height: 20px;
 }
 
+#tabs .nav-link.active {
+  color: var(--main-color) !important;
+  background-color: var(--mode-color) !important;
+  font-weight: 800;
+}
+
+#tabs .nav-link {
+  color: white !important;
+  background-color: none !important;
+}
+
+
 .ellipsis {
   text-overflow: ellipsis; /* enables ellipsis */
   white-space: nowrap; /* keeps the text in a single line */

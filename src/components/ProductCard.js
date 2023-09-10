@@ -9,7 +9,7 @@ import '../App.css';
 const ProductComponent = ({productProp}) => {
   const user = useContext(UserContext);
   const { name, _id, productImg, quantity, description } = productProp;
-
+  
   return (
     <Col sm={6} md={4} lg={3} className='my-3'>
       <Card data-bs-theme="dark" border="secondary" id={`productComponent${_id}`} className="text-white productHighlight">

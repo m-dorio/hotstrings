@@ -10,8 +10,7 @@ const SearchByPrice = () => {
   const [maxPrice, setMaxPrice] = useState('');
   const [products, setProducts] = useState([]);
 
-
-    const handleChange = (event) => {
+  const handleChange = (event) => {
     setMinPrice(1);
     setMaxPrice(event.target.value);
   };

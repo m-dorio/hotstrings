@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
-import EditProduct from './EditProduct';
-import ArchiveProduct from './ArchiveProduct'
+import EditProduct from '../EditProduct';
+import ArchiveProduct from '../ArchiveProduct'
 
-export default function AdminView({productsData, fetchData }) {
+export default function AdminView({productsData, fetchData, endpoint }) {
 
     // b. Add state to store all products 
     const [products, setProducts] = useState([])
 
-
     //Getting the productsData from the products page
     useEffect(() => {
+      
         const productsArr = productsData.map(product => {
+
             return (
+
                 <tr key={product._id}>
                     <td>{product._id}</td>
                     <td>{product.productImg}</td>
@@ -27,11 +29,11 @@ export default function AdminView({productsData, fetchData }) {
                     <td>
                     <EditProduct product={product._id} fetchData={fetchData}/>
                     </td> 
-                    
                     <td>
-                    <ArchiveProduct product={product._id} fetchData={fetchData} isActive={product.isActive}/>
+                    <ArchiveProduct endpoint={endpoint} product={product._id} fetchData={fetchData} isActive={product.isActive}/>
                     </td>     
                 </tr>
+              
                 )
         })
 

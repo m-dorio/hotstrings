@@ -1,7 +1,7 @@
 import {useState, useEffect } from 'react';
 import {Row, Col, Container, Card, Button} from 'react-bootstrap';
-import ResetPassword from '../components/ResetPassword';
-import UpdateProfile from '../components/UpdateProfile'
+import ResetPassword from '../components/user/ResetPassword';
+import UpdateProfile from '../components/user/UpdateProfile'
 
 export default function Profile(){
 
@@ -33,13 +33,11 @@ export default function Profile(){
         <Container>
         <Row>
 
-        {/* <Button variant="primary" size="sm" onClick={openEdit}>Edit</Button> */}
-        <Col xs={12} md={{ span: 8, offset: 2 }} xl={{ span: 8, offset: 2 }} className='my-3' lg={{ span: 8, offset: 2 }}>
+        <Col xs={12} sm={12} md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }} xl={{ span: 6, offset: 3 }} className='my-3' >
         <Card data-bs-theme="dark">
-        {/* <EditProfile user={user} fetchData={fetchData} /> */}
-     
-        <Card.Img id="profile_img" className='object-fit-cover' src={details.userImg} />
-        <Card.Title><h1 className='p-2 text-center'>{details.firstName} {details.lastName}</h1></Card.Title>
+ 
+        <Card.Img id="profile_img" className='img-fluid' src={details.userImg} />
+        <Card.Title><h1 className='text-center'>{details.firstName} {details.lastName}</h1></Card.Title>
             <Card.Body>         
                 <Card.Title>Contacts</Card.Title>
                 <Card.Text>Mobile Number: {details.mobileNo}</Card.Text>
