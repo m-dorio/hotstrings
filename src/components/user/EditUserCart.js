@@ -2,14 +2,15 @@
 import { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
-export default function EditUserCart({ product, fetchData, isActive}){
+export default function EditUserCart({ productId, fetchData, isActive}){
 
-	const archiveToggle = (e, product)=>{
+	const moveToLikes = (e, productId)=>{
 
 		e.preventDefault();
 
-		fetch(`${process.env.REACT_APP_API_URL}/cart/${product}/archive`,{
+		fetch(`${process.env.REACT_APP_API_URL}/cart/${productId}/archive`,{
 
 			method:'PUT',
 			headers:{
@@ -21,12 +22,13 @@ export default function EditUserCart({ product, fetchData, isActive}){
 		.then(res=>res.json())
 		.then(data=>{
 
+			{console.log(`Product ID: ${productId}`)}
 
 			if(data === true){
 				Swal.fire({
 					title:'Success!',
 					icon:'success',
-					text:'Product Successfully Archived'
+					text:'Product Moved to Likes ❤️ Successfully!'
 				})
 				
                 fetchData();
@@ -41,13 +43,18 @@ export default function EditUserCart({ product, fetchData, isActive}){
 			}
 		})
 
+		{console.log(`${productId} ${isActive}`)}
+
 	}
 
-	const activateToggle = (e, product)=>{
+	// {console.log(`${product}`)}
+	// {console.log(`${process.env.REACT_APP_API_URL}/cart/${productId}/archive`)}
+
+	const moveToOrder = (e, productId)=>{
 
 		e.preventDefault();
 
-		fetch(`${process.env.REACT_APP_API_URL}/cart/${product}/activate`,{
+		fetch(`${process.env.REACT_APP_API_URL}/cart/${productId}/activate`,{
 
 			method:'PUT',
 			headers:{
@@ -59,12 +66,13 @@ export default function EditUserCart({ product, fetchData, isActive}){
 		.then(res=>res.json())
 		.then(data=>{
 
+			{console.log(`Product ID: ${productId}`)}
 
 			if(data === true){
 				Swal.fire({
 					title:'Success!',
 					icon:'success',
-					text:'Product Successfully Activated'
+					text:'Product Moved to Cart Successfully'
 				})
 				
                 fetchData();
@@ -79,20 +87,20 @@ export default function EditUserCart({ product, fetchData, isActive}){
 			}
 		})
 
-		
+		{console.log(`${productId} ${isActive}`)}
+
 	}
 
+	
 	return (
 		<>
 
 		{isActive ? 
-			<Button variant="danger" size="sm" onClick={e=>archiveToggle(e,product)}>Archive</Button>
+			<Link className='btn btn-warning d-block' size="sm" onClick={e=>moveToLikes(e,productId)}>Move to Likes ❤️</Link>
 			:
-			<Button variant="success" size="sm" onClick={e=>activateToggle(e,product)}>Activate</Button>	            
+			<Link className='btn btn-danger d-block' size="sm" onClick={e=>moveToOrder(e,productId)}>Move to Order</Link>	            
 		}
-
 		</>
-
 
 	)
 }

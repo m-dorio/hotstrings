@@ -6,7 +6,7 @@ export default function Error() {
     const data = {
         title: "404 - Not found",
         subtitle: "The page you are looking for cannot be found",
-        btnVariant: "danger",
+        variant: "danger",
         buttonText: "Back home",
         linkTo: "./"
     }

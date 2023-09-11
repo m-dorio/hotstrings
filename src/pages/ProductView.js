@@ -14,17 +14,22 @@ export default function ProductView({ productsData, fetchData }) {
   const { user } = useContext(UserContext);
   const { productId } = useParams();
 
+
   // State
   const [id, setProductId] = useState("");
+  const [itemId, setItemId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [img, setImage] = useState("");
-  const [itemsToBuy, setItemsToBuy] = useState(0);
+  const [itemsToBuy, setItemsToBuy]= useState(0);
+  //User input for quantity
   const [quantity, setQuantity] = useState(0);
-  const [inventory, setInventory] = useState(0);
+  //User display available items (stocks)
+  // const [cartItem, setCartItem] = useState(0);
+
   const [ratings, setRatings] = useState([]);
-  let [item, setItem] = useState(0);
+
   const subtotal = formatCurrency(price * itemsToBuy);
 
   // Pagination
@@ -38,88 +43,80 @@ export default function ProductView({ productsData, fetchData }) {
     );
   }
 
-  // Functions
-  const updateProduct = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify({
-        productId: productId,
-        quantity: quantity - itemsToBuy
-      })
-    })
-    console.log("Im here!")
-    reset();
-  }
 
-  const addToCart = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/cart/add`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify({
-        productId: productId,
-        quantity: itemsToBuy
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message === 'Added to Cart Successfully.') {
-          Swal.fire({
-            title: "Successfully added.",
-            icon: 'success',
-            text: "You have successfully added the product."
-          });
-          updateProduct();
-        } else {
-          Swal.fire({
-            title: "Something went wrong",
-            icon: 'error',
-            text: "Please try again."
-          })
-        }
-      })
-  }
+const addToCart = () => {
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`)
-      .then(res => res.json())
-      .then(data => {
+  fetch(`${process.env.REACT_APP_API_URL}/cart/add`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify({
+      productId: productId,
+      quantity: itemsToBuy
+    })
+  })
+    .then((res) => res.json())
+    .then((data) => {
+
+      if (data) {
+        Swal.fire({
+          title: "Successfully added.",
+          icon: 'success',
+          text: "You have successfully added the product."
+        });
+ 
+      } else {
+        Swal.fire({
+          title: "Something went wrong",
+          icon: 'error',
+          text: "Please try again."
+        })
+      }
+      
+      console.log(data);
+
+    })
+}
+
+useEffect(() => {
+
+  fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`)
+    .then(res => res.json())
+    .then(data => {
         setName(data.name);
         setDescription(data.description);
         setPrice(data.price);
         setImage(data.productImg);
         setItemsToBuy(itemsToBuy); // Is this intended? It doesn't seem to be used.
-        setInventory(data.quantity - itemsToBuy);
         setQuantity(data.quantity);
         setRatings(data.ratings);
         setProductId(productId);
-      })
-  }, [productId])
+  })
 
-  function add() {
-    if (inventory > 0) {
-      setItemsToBuy(prevItems => prevItems + 1);
-      setInventory(prevInventory => prevInventory - 1);
-    }
+}, [productId])
+
+function add() {
+  if (quantity > 0) {
+    setItemsToBuy(prevItems => prevItems + 1);
+    setQuantity(prevInventory => prevInventory - 1);
   }
+}
 
   function remove() {
     if (itemsToBuy > 0) {
       setItemsToBuy(prevItems => prevItems - 1);
-      setInventory(prevInventory => prevInventory + 1);
+      setQuantity(prevInventory => prevInventory + 1);
     }
   }
 
   function reset() {
+    fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`)
+      .then(res => res.json())
+      .then(data => {
     setItemsToBuy(0);
-    setItem(item); // Is this intended? It doesn't seem to be used.
-    setInventory(quantity);
+    setQuantity(data.quantity);})
   }
 
   return (
@@ -127,14 +124,14 @@ export default function ProductView({ productsData, fetchData }) {
         <Container>
             <Row>
                 <Col xs={12} lg={6} className="pt-5">
-                   
+                   <h1 className="text-white">Item: {name}</h1>
                 </Col>
             </Row>
             <Row>
                 <Col xs={12} lg={6}>
                     <Card className='bg-dark text-white productHighlight'>
                         <Card.Body className="text-white">
-                            <Card.Title><h1 className="text-warning">{name}</h1></Card.Title>
+                            {/* <Card.Title><h1 className="text-warning">{name}</h1></Card.Title> */}
                             <Card.Img variant="top" className='my-3 object-fit-cover border rounded' src={img} />
                             <Card.Title><span className="text-warning h3">Available:</span> <span className="text-white h3">{quantity}</span></Card.Title>
                             <Card.Title><span className="text-warning">Description:</span></Card.Title>
@@ -149,9 +146,19 @@ export default function ProductView({ productsData, fetchData }) {
                                                         <Button className='m-1 px-3' variant="warning" onClick={add}>+</Button>
                                                     </ButtonGroup>
                                                     <Card.Text className='h4 text-warning'>Total: {subtotal}</Card.Text>
-                                                    <Button variant="success" onClick={() => addToCart(productId)}>
+
+                                                    <>
+                                                      {itemsToBuy > 0 ? (
+                                                        <Button variant="success" onClick={() => addToCart(productId)}>
+                                                          Add to Cart
+                                                        </Button>
+                                                      ) : (
+                                                        <Button variant="success" disabled onClick={() => addToCart(productId)}>
                                                         Add to Cart
-                                                    </Button>
+                                                        </Button>
+                                                      )}
+                                                    </>
+
                                                     <Link className="btn btn-danger d-block" onClick={() => reset()}>
                                                         Reset
                                                     </Link>

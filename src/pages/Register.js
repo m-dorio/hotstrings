@@ -166,7 +166,7 @@ export default function Register() {
                         placeholder="Enter Image URL"
                         required
                         value={userImg}
-                        onChange={e=>{setMobileNo(e.target.value)}}
+                        onChange={e=>{setUserImg(e.target.value)}}
                     />
                 </Form.Group>
 

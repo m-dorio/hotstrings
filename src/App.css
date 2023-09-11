@@ -151,7 +151,7 @@ footer {
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 900;
-  font-size:  11.2vw;
+  font-size:  10.1vw;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -180,7 +180,8 @@ footer {
 
 #tabs .nav-link {
   color: white !important;
-  background-color: none !important;
+  background-color: var(--cl2-color) !important;
+
 }
 
 
@@ -196,7 +197,7 @@ footer {
   background-size: cover;
   background-position: center center;
   color: #fff;
-  min-height: 50vh;
+  min-height: 25vh;
   max-width: 100vmax;
   background-color: var(--bgm-color);
 }
