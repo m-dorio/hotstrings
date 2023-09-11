@@ -159,7 +159,6 @@ export default function Register() {
                     <Form.Control
                         type="text"
                         placeholder="Enter Image URL"
-                        required
                         value={userImg}
                         onChange={e=>{setUserImg(e.target.value)}}
                     />
