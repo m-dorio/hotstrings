@@ -21,7 +21,7 @@ export default function UserView({status,endpoint}) {
           <Tabs
             defaultActiveKey="featured"
             id="fill-tab-example"
-            className="mb-3 ="
+            className="mb-5"
             fill
           >
             <Tab eventKey="featured" title="All">
@@ -33,9 +33,9 @@ export default function UserView({status,endpoint}) {
             <Tab eventKey="price" title="Search By Price">
               <SearchByPrice />
             </Tab>
-            <Tab eventKey="unavailable" title="Out Of Order">
+            {/* <Tab eventKey="unavailable" title="Out Of Order">
             <AllProducts endpoint={`${endpoint}/inactive`} status={status}/>
-            </Tab>
+            </Tab> */}
           </Tabs>
         </Col>
       </Row>

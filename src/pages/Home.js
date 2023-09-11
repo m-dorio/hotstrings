@@ -8,9 +8,8 @@ export default function Home() {
 
 	return (
 		<>
-
 		<section id="landing">
-			<div className="d-flex justify-content-center align-content-center mt-5">
+			<div className="d-flex justify-content-center align-content-center">
 				<div className="d-flex d-block d-sm-block d-md-none align-items-center">
 					<p className="banner textfxa text-center mt-5">
 						HOT<Link className="mt-5 textfxb" to="./">/STRINGS</Link>

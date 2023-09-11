@@ -1,11 +1,11 @@
 *{
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   text-decoration: none !important;
   border: none ;
   outline: none;
-  scroll-behavior: smooth;
+  scroll-behavior: smooth !important;
 }
 
 :root{
@@ -30,7 +30,7 @@
   linear-gradient(127deg, var(--main-color), rgba(0, 0, 0, 0) 80.71%),
   linear-gradient(217deg, var(--main-color), rgba(0, 0, 0, 0) 80.71%),  
   url('');
-  --transition1: 0.30s ease-in-out;
+  --transition: 0.30s ease-in-out;
   
 }
 
@@ -38,6 +38,10 @@
   font-family: 'Roboto', sans-serif;  
   background-color: var(--sec-color);
   
+}
+
+.transitionFx{
+  transition: 1.8s ease-in-out;
 }
 
 .form-range{
@@ -175,15 +179,29 @@ footer {
 #tabs .nav-link.active {
   color: var(--main-color) !important;
   background-color: var(--mode-color) !important;
-  font-weight: 800;
+  font-weight: 400;
+  transition: 0.8s ease-in-out;
 }
 
 #tabs .nav-link {
   color: white !important;
-  background-color: var(--cl2-color) !important;
-
+  background-color: var(--textR-color) !important;
+  font-weight: 400;
+  transition: 0.8s ease-in-out;
 }
 
+.nav-link {
+  color: white !important;
+  background-color: none !important;
+  font-weight: 600;
+  transition: 0.5s ease-in-out;
+}
+.nav-link.active{
+  color: var(--mode-color) !important;
+  background-color: none !important;
+  font-weight: 600;
+  transition: 0.5s ease-in-out;
+}
 
 .ellipsis {
   text-overflow: ellipsis; /* enables ellipsis */
