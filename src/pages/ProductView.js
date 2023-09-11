@@ -9,6 +9,7 @@ import FeaturedProducts from '../components/FeaturedProducts'
 import ProductRating from "../components/ProductRating";
 import ArchiveProduct from '../components/ArchiveProduct'
 
+
 export default function ProductView({ productsData, fetchData }) {
   // Context and Params
   const { user } = useContext(UserContext);

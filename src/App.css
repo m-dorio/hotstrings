@@ -210,12 +210,19 @@ footer {
 }
 
 #landing{
+  color: #fff;
+  min-height: 100vh;
+  max-width: 100vmax;
+  background-color: var(--bgm-color);
+}
+
+#banner{
   background: var(--gradient-bg), url('https://m-dorio.github.io/foodstore/images/landing-ramen.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  color: #fff;
+
   min-height: 25vh;
   max-width: 100vmax;
-  background-color: var(--bgm-color);
+
 }

@@ -17,7 +17,7 @@ export default function Profile(){
         .then(res=>res.json())
         .then(data=>{
             // console.log(data)
-            if(typeof data.id !== undefined){
+            if(data.id !== undefined){
                 setDetails(data);
             }
         })

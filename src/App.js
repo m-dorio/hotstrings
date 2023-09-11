@@ -4,6 +4,7 @@ import Cart from './pages/Cart';
 import Container from 'react-bootstrap/Container'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import PlaceholderLoading from 'react-placeholder-loading'
 import AppNavbar from './components/AppNavbar'
 import AddProduct from './components/AddProduct'
 import Home from './pages/Home'
@@ -14,11 +15,12 @@ import Profile from './pages/Profile';
 import Error from './pages/Error';
 import Footer from './components/Footer'
 
+
 import './App.css';
 import { UserProvider } from './UserContext';
 
 function App() {
-
+  
   const [user, setUser] = useState({
     //token: localStorage.getItem('token')
     id: null,

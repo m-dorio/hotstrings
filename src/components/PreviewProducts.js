@@ -1,14 +1,30 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import PlaceholderLoading from 'react-placeholder-loading'
 
 export default function PreviewProducts({ breakPoint, productData }) {
   const { _id, name, description, price, productImg } = productData;
+	const [loading, setLoading] = useState(true);
 
+	useEffect(() => {
+	  const t = setTimeout(() => {
+		setLoading(false); // Set loading to false after 3000ms
+	  }, 600);
+  
+	  return () => {
+		clearTimeout(t); // Cleanup the timeout on unmount
+	  };
+	}, []);
 
   return (
+    <>
+    {loading ? (
+     <PlaceholderLoading colorStart="#313131" colorEnd="#1e1e1e" shape="rect" width={300} height={50} />
+     ) : (
+    <>
     <Col xs={12} sm={12} md={6} lg={6} xl={breakPoint} className="mb-1">
-		
+		  
       <Card className="product-card mx-2 bg-dark text-warning">
 		<Card.Header>
 		<Link to={`/products/${_id}`}>
@@ -29,5 +45,8 @@ export default function PreviewProducts({ breakPoint, productData }) {
         </Card.Footer>
       </Card>
     </Col>
+  </>
+ )}
+ </>
   );
 }
