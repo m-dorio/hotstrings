@@ -1,9 +1,7 @@
 import { Card, Button, Col, Row } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
-import formatCurrency from './FormatCurrency';
-import UserContext from '../UserContext';
-import { useContext } from 'react';
+
 import '../App.css';
 import PlaceholderLoading from 'react-placeholder-loading'
 import React, { useState, useEffect } from 'react';

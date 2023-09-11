@@ -97,15 +97,10 @@ export default function Register() {
 
     },[firstName,lastName,email,mobileNo,password,confirmPassword])
 
-	// console.log(user.access)
-
-    // if (userImg == "")
-    // {setUserImg('https://cdn.dribbble.com/users/9685/screenshots/997495/avatarzzz.gif')}
-    
 	return(
 
         (user.id !==null)?
-        <Navigate to="/products/" />
+        <Navigate to="/users/login" />
 		:
 		<>
 
