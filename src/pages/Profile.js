@@ -16,16 +16,14 @@ export default function Profile(){
         })
         .then(res=>res.json())
         .then(data=>{
-            // console.log(data)
-            if(data.id !== undefined){
                 setDetails(data);
-            }
         })
     },[details])
 
     if (details.userImg == "")
     {details.userImg="https://cdn.dribbble.com/users/9685/screenshots/997495/avatarzzz.gif"}
 
+    
     return (
 
         (details.id !== null)?

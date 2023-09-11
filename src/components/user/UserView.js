@@ -7,17 +7,17 @@ import PlaceholderLoading from 'react-placeholder-loading'
 
 export default function UserView({status,endpoint}) {
 
-	const [loading, setLoading] = useState(true);
+	// const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-	  const t = setTimeout(() => {
-		setLoading(false); // Set loading to false after 3000ms
-	  }, 30);
+	// useEffect(() => {
+	//   const t = setTimeout(() => {
+	// 	setLoading(false); // Set loading to false after 3000ms
+	//   }, 30);
   
-	  return () => {
-		clearTimeout(t); // Cleanup the timeout on unmount
-	  };
-	}, []);
+	//   return () => {
+	// 	clearTimeout(t); // Cleanup the timeout on unmount
+	//   };
+	// }, []);
 
   return (
     <>

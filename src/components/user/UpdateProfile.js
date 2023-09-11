@@ -26,9 +26,14 @@ function UpdateProfile() {
         .then((res) => res.json())
         .then((data) => {
           setUserData(data);
+          //console.log(data)
         });
 
     }
+
+  
+
+
   }, [showEdit]);
 
   const handleInputChange = (e) => {

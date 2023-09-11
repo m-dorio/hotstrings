@@ -7,22 +7,27 @@ export default function PreviewProducts({ breakPoint, productData }) {
   const { _id, name, description, price, productImg } = productData;
 	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-	  const t = setTimeout(() => {
-		setLoading(false); // Set loading to false after 3000ms
-	  }, 600);
+	// useEffect(() => {
+	//   const t = setTimeout(() => {
+	// 	setLoading(false); // Set loading to false after 3000ms
+	//   }, 1800);
   
-	  return () => {
-		clearTimeout(t); // Cleanup the timeout on unmount
-	  };
-	}, []);
+	//   return () => {
+	// 	clearTimeout(t); // Cleanup the timeout on unmount
+	//   };
+	// }, []);
 
   return (
     <>
-    {loading ? (
-     <PlaceholderLoading colorStart="#313131" colorEnd="#1e1e1e" shape="rect" width={300} height={50} />
+    {/* {loading ? (<>
+         <Col xs={12} sm={12} md={6} lg={6} xl={breakPoint} className="mb-1 text-center align-content-center">
+          
+         <PlaceholderLoading colorStart="#313131" colorEnd="#1e1e1e" shape="rect" width={260} height={320} />
+         </Col>
+
+     </>
      ) : (
-    <>
+    <> */}
     <Col xs={12} sm={12} md={6} lg={6} xl={breakPoint} className="mb-1">
 		  
       <Card className="product-card mx-2 bg-dark text-warning">
@@ -46,7 +51,7 @@ export default function PreviewProducts({ breakPoint, productData }) {
       </Card>
     </Col>
   </>
- )}
- </>
+//  )}
+//  </>
   );
 }

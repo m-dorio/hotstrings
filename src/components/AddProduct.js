@@ -3,7 +3,7 @@ import { Row, Col, Form, Button } from 'react-bootstrap';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UserContext from '../UserContext';
-import Footer from '../components/Footer'
+
 
 export default function AddProduct(){
 
@@ -114,7 +114,7 @@ export default function AddProduct(){
                 </Col>
             </Row>
             </div>  
-            <Footer />
+ 
            </>
             :
             <Navigate to="/products/all" />
