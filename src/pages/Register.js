@@ -2,35 +2,25 @@ import { useState, useEffect, useContext } from 'react';
 import UserContext from '../UserContext';
 import { Navigate } from 'react-router-dom';
 import { Row, Col, Form, Button } from 'react-bootstrap';
-
+import {useNavigate} from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export default function Register() {
 
 	const { user, setUser} = useContext(UserContext);
-	//State hooks to store the values of the input fields
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-          // Update the user context with the access token
-          setUser({ access: token });
-        }
-      });
-
+    const navigate = useNavigate();
 	const [ firstName, setFirstName ] = useState("");
 	//(5 mins) add state hooks for lastName, email, mobileNo, password, confirmPassword, isActive(button)
 	const [lastName,setLastName] = useState("");
     const [email,setEmail] = useState("");
     const [mobileNo,setMobileNo] = useState("");
+    const [address,setAddress] = useState("");
     const [userImg,setUserImg] = useState("");
     const [password,setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");	
-
 	//State to determine whether submit button is enabled or not
     const [isActive, setIsActive] = useState(false);
-
     //fetch
-
     function registerUser(e){
     	//prevent page redirection via form submission
     	e.preventDefault();
@@ -46,6 +36,7 @@ export default function Register() {
     			lastName: lastName,
     			email: email,
     			mobileNo: mobileNo,
+                address: address,
     			password: password,
                 userImg: userImg
     		})
@@ -54,13 +45,13 @@ export default function Register() {
     	.then(data=>{
 
     		if(data){
-
     			setFirstName('');
     			setLastName('');
     			setEmail('');
     			setMobileNo('');
+                setAddress('');
     			setPassword('');
-                setUserImg('https://cdn.dribbble.com/users/9685/screenshots/997495/avatarzzz.gif')
+                setUserImg('')
     			setConfirmPassword('')
     		
                 Swal.fire({
@@ -68,7 +59,8 @@ export default function Register() {
                     icon: "success",
                     text: "Welcome to HotStrings!"
                 })
-        
+
+                navigate('/users/login'); // Redirect to login page     
             } else {
         
                 Swal.fire({
@@ -81,9 +73,6 @@ export default function Register() {
     	}, [])
     }
 
-    //useEffect() has 2 arguments
-    	//function - side effect you want to perform
-    	//dependency - optional array, the effect will run when there are changes in the component's dependency
 
     useEffect(()=>{
 
@@ -132,16 +121,6 @@ export default function Register() {
                     />
                 </Form.Group>
 
-                <Form.Group className='mt-3'>
-                    <Form.Label>Email:</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter Email"
-                        required
-                        value={email}
-                        onChange={e=>{setEmail(e.target.value)}}
-                    />
-                </Form.Group>
 
                 <Form.Group className='mt-3'>
                     <Form.Label>Mobile No:</Form.Label>
@@ -154,13 +133,38 @@ export default function Register() {
                     />
                 </Form.Group>
 
+                
+                <Form.Group className='mt-3'>
+                    <Form.Label>Home/Office Address:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter Billing/Home Address"
+                        required
+                        value={address}
+                        onChange={e=>{setAddress(e.target.value)}}
+                    />
+                </Form.Group>
+
+
                 <Form.Group className='mt-3'>
                     <Form.Label>Profile Picture:</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter Image URL"
+                        placeholder="Enter Image URL [optional]"
                         value={userImg}
                         onChange={e=>{setUserImg(e.target.value)}}
+                    />
+                </Form.Group>
+
+
+                <Form.Group className='mt-3'>
+                    <Form.Label>Email:</Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="Enter Email"
+                        required
+                        value={email}
+                        onChange={e=>{setEmail(e.target.value)}}
                     />
                 </Form.Group>
 

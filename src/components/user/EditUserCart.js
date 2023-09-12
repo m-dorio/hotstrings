@@ -98,7 +98,7 @@ export default function EditUserCart({ productId, fetchData, isActive}){
 		{isActive ? 
 			<Link className='btn btn-warning d-block' size="sm" onClick={e=>moveToLikes(e,productId)}>Move to Likes ❤️</Link>
 			:
-			<Link className='btn btn-danger d-block' size="sm" onClick={e=>moveToOrder(e,productId)}>Move to Order</Link>	            
+			<Link className='btn btn-info d-block' size="sm" onClick={e=>moveToOrder(e,productId)}>Move to Cart</Link>	            
 		}
 		</>
 

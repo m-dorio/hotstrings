@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Tab, Tabs, Table } from 'react-bootstrap';
-import ProductSearch from '../ProductSearch';
-import SearchByPrice from '../SearchByPrice'
-import AllProducts from '../AllProducts';
+import ProductSearch from '../product/ProductSearch';
+import SearchByPrice from '../product/SearchByPrice'
+import AllProducts from '../product/AllProducts';
 import PlaceholderLoading from 'react-placeholder-loading'
 
 export default function UserView({status,endpoint}) {

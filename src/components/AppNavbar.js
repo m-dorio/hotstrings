@@ -30,7 +30,7 @@ export default function AppNavbar() {
                         ?
                         <>
                             <Nav.Link className='mx-3' as={ NavLink } to="/products" exact="true">Manage Products</Nav.Link>
-                            <Nav.Link className='mx-3' as={ NavLink } to="/products/add">Add Product</Nav.Link>
+                            <Nav.Link className='mx-3' as={ NavLink } to="/cart/all">Manage Orders</Nav.Link>
                             <Nav.Link className='mx-3' as={ NavLink } to="/logout">Logout</Nav.Link>
                         </>
                         :

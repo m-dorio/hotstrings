@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import FormatCurrency from '../FormatCurrency';
 import EditUserCart from './EditUserCart'
 import { Navigate } from 'react-router-dom'
-import Banner from '../../components/Banner'
+import Banner from '../components/Banner';
 import Swal from 'sweetalert2';
 
 export default function Orders({ productId, status, fetchData, endpoint }) {

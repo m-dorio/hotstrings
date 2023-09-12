@@ -4,9 +4,8 @@ import Cart from './pages/Cart';
 import Container from 'react-bootstrap/Container'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import PlaceholderLoading from 'react-placeholder-loading'
 import AppNavbar from './components/AppNavbar'
-import AddProduct from './components/AddProduct'
+import AddProduct from './components/product/AddProduct'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login';
@@ -66,6 +65,7 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/products" element={<Products/>}/>
             <Route path ="/products/add" element={<AddProduct/>}/>
+            
             <Route exact="true" path="/products/:productId" element={<ProductView/>}/>
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/cart" element={<Cart/>}/>

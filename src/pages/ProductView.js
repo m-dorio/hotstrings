@@ -4,10 +4,10 @@ import { useParams, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import UserContext from "../UserContext";
 import formatCurrency from '../components/FormatCurrency';
-import ProductCard from '../components/ProductCard'
-import FeaturedProducts from '../components/FeaturedProducts'
-import ProductRating from "../components/ProductRating";
-import ArchiveProduct from '../components/ArchiveProduct'
+import ProductCard from '../components/product/ProductCard'
+import FeaturedProducts from '../components/product/FeaturedProducts'
+import ProductRating from "../components/product/ProductRating";
+import ArchiveProduct from '../components/product/ArchiveProduct'
 
 
 export default function ProductView({ productsData, fetchData }) {
@@ -56,6 +56,7 @@ const addToCart = () => {
     body: JSON.stringify({
       productId: productId,
       quantity: itemsToBuy
+      
     })
   })
     .then((res) => res.json())

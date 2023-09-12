@@ -93,7 +93,7 @@ export default function EditProduct({product,fetchData}){
 
 		<>
 
-			<Button variant="primary" size="sm" onClick={()=>openEdit(product)}>Edit</Button>
+			<Button variant="primary" block size="sm" onClick={()=>openEdit(product)}>Edit</Button>
 
 			<Modal show={showEdit} onHide={closeEdit}>
 				<Form onSubmit={e=>editProduct(e,productId)}>

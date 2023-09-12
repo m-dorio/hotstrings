@@ -65,7 +65,7 @@ export default function Products() {
               <Row>
                 <Col>
  
-                    <UserCart fetchData={fetchData} endpoint="./cart/" status="My Cart" />
+                    <UserCart fetchData={fetchData} endpoint="" status="Cart Items" />
         
                 </Col>
               </Row>

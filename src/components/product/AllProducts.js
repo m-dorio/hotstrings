@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { Container, Row, Col, Tab, Tabs, Button, Modal, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import FormatCurrency from './FormatCurrency';
+import FormatCurrency from '../FormatCurrency';
+import Swal from 'sweetalert2';
 
 export default function AllProducts({status,endpoint}) {
     // Initialize the products state

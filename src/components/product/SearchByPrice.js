@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
 import { Col, Row, Container, Button, Modal, Form } from 'react-bootstrap';
-import FormatCurrency from './FormatCurrency';
+import FormatCurrency from '../FormatCurrency';
 import { Link } from 'react-router-dom';
 
 const SearchByPrice = () => {

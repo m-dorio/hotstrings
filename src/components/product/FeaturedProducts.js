@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { CardGroup } from 'react-bootstrap';
-import PreviewProducts from './PreviewProducts'
+import PreviewProducts from './PreviewProducts';
 
 export default function FeaturedProducts(){
 
 	const [ previews, setPreviews ] = useState([]);
-	
 
 	useEffect(()=>{
 		fetch(`${process.env.REACT_APP_API_URL}/products`)

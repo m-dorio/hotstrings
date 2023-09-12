@@ -23,13 +23,22 @@ export default function Products() {
 
   const renderView = () => {
     if (user.isAdmin) {
-      return <AdminView productsData={products} fetchData={fetchData} />;
+      return (
+        <Container>
+        <Row>
+          <Col>
+            <AdminView productsData={products} fetchData={fetchData} />;
+          </Col>
+          </Row>
+        </Container>
+      )
+
     } else {
       return (
         <Container>
           <Row>
             <Col>
-              <UserView endpoint={`./`} status={"Available Products"} />
+              <UserView productsData={products} endpoint={`./`} status={"Available Products"} />
             </Col>
           </Row>
         </Container>

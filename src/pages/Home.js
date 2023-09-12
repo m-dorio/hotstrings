@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import FeaturedProducts from '../components/FeaturedProducts';
+import FeaturedProducts from '../components/product/FeaturedProducts';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import PlaceholderLoading from 'react-placeholder-loading'
 

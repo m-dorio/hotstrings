@@ -2,10 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  text-decoration: none !important;
-  border: none ;
-  outline: none;
-  scroll-behavior: smooth !important;
+
 }
 
 :root{
@@ -129,7 +126,7 @@ footer {
 .textuppercase{ text-transform: uppercase;}
 
 /**
-* !STRONG TEXT
+* !STRONG TEXT FX
 **/
 
 .textfxa{
@@ -180,14 +177,14 @@ footer {
   color: var(--main-color) !important;
   background-color: var(--mode-color) !important;
   font-weight: 400;
-  transition: 0.8s ease-in-out;
+  transition: 0.6s ease-in-out;
 }
 
 #tabs .nav-link {
   color: white !important;
   background-color: var(--textR-color) !important;
   font-weight: 400;
-  transition: 0.8s ease-in-out;
+  transition: 0.6s ease-in-out;
 }
 
 .nav-link {

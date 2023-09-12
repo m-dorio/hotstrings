@@ -1,37 +1,69 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container, Row, Col, Tab, Tabs, Button } from 'react-bootstrap';
+import { Card, Container, Row, Col, Tab, Tabs, Button, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import FormatCurrency from '../FormatCurrency';
 import EditUserCart from './EditUserCart'
 import { Navigate } from 'react-router-dom'
-import Banner from '../../components/Banner'
+import Banner from '../Banner';
 import Swal from 'sweetalert2';
 
 export default function UserCart({ productId, status, fetchData, endpoint }) {
 
     const [myCart, setCart] = useState([]);
     const [myOrders, setOrders] = useState([]);
-    const [cartCount, setCount] = useState(0); // Initialize cartCount with 0
+    const [ordersCount, setOrdersCount] = useState([]);
+    const [cartCount, setCartCount] = useState(0); // Initialize cartCount with 0
+    const [likesCount, setLikesCount] = useState(0); // Initialize likesCount with 0
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/${endpoint}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+      fetch(`${process.env.REACT_APP_API_URL}/cart`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data !== undefined) {
+          setCart(data);
+          const activeItems = data.filter(item => item.isActive);
+          const inactiveItems = data.filter(item => !item.isActive);
+          setCartCount(activeItems.length);
+          setLikesCount(inactiveItems.length);
+        } else { 
+          setCart([]);
+          setCartCount(0);
+          setLikesCount(0);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching cart data:', error);
+      });
+    }, [myCart]);
+  
+
+    useEffect(() => {
+      fetch(`${process.env.REACT_APP_API_URL}/cart/orders`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data !== undefined) {
+             setOrders(data);
+             setOrdersCount(myOrders.map((product)=> product.isOrdered).length);
           }
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data !== undefined) {
-                setCart(data.totalProducts);
-                setCount(data.totalProducts.length); 
-               
-            }
-        })
-        .catch(error => {
-          console.error('Error fetching cart data:', error);
-        });
-    }, [myCart]); 
-    
+          else{           
+              setCart([]);  
+             setOrdersCount(0)
+          }
+      })
+      .catch(error => {
+        console.error('Error fetching cart data:', error);
+      });
+  }, [myOrders]); 
+
+
     const clearCart = (e)=>{
 
 		e.preventDefault();
@@ -54,14 +86,14 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
 					text:'Cart is Empty.'
 				})
 				
-                fetchData();
+         //       fetchData();
 			}else{
 				Swal.fire({
 					title:'Error!',
 					icon:'error',
 					text:'Please try again'
 				})
-                fetchData();
+         //       fetchData();
 			}
 
             console.log('data:', data);
@@ -69,151 +101,151 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
 
 	}
 
-    const checkout = (e)=>{
+  const checkout = (e) => {
+    e.preventDefault();
+  
+    fetch(`${process.env.REACT_APP_API_URL}/cart/checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data) {
+          Swal.fire({
+            title: 'Success!',
+            icon: 'success',
+            text: 'Thank you! Checkout successfully!',
+          });
 
-		e.preventDefault();
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: 'Please try again',
+          });
 
-		fetch(`${process.env.REACT_APP_API_URL}/cart/checkout`,{
+        }
+      })
+      .catch((error) => {
+        console.error('Error during checkout:', error);
+        Swal.fire({
+          title: 'Error!',
+          icon: 'error',
+          text: 'An error occurred during checkout. Please try again later.',
+        });
 
-			method:'GET',
-			headers:{
-				'Content-Type':'application/json',
-				'Authorization':`Bearer ${localStorage.getItem('token')}`
-			}
-		})
-		.then(res=>res.json())
-		.then(data=>{
-
-			if(data){
-				Swal.fire({
-					title:'Success!',
-					icon:'success',
-					text:'Thank you! Checkout successfully!',
-				})
-			
-                fetchData();
-			}else{
-				Swal.fire({
-					title:'Error!',
-					icon:'error',
-					text:'Please try again'
-				})
-                fetchData();
-			}
-
-            console.log('data:', data);
-		})
-
-	}
+      });
+  };
+  
 
   return (
-    // (myCart === !undefined) ? 
+
     <>
      <Container id="userview" className='fluid mb-5'>
-        <Row>
-            <Col md={12}>
-                <Container className='dflex text-warning'>
-                        <Row className=' align-items-center'>   
-                            <Col sm={{ span: 10, offset: 1 }} md={{ span: 4}}>
-                                <h2 className="text-center text-white my-4">{status} ({cartCount})</h2>
+     <Row>
+        <Col md={12}>
+            <Container className='dflex text-warning'>
+                <Row className='align-items-center'>
+                    <Col sm={{ span: 10, offset: 1 }} md={{ span: 4 }}>
+                        <h2 className="text-center text-white my-4">{status}</h2>
+                    </Col>
+                    <Col sm={{ span: 10, offset: 1 }} lg={{ span: 4 }}>
+                        <Row>
+                            <Col>
+                                <Link className='my-2 btn btn-success d-block' size="sm" onClick={e => checkout(e, productId)}>Checkout</Link>
                             </Col>
-
-                            <Col sm={{ span: 10, offset: 1 }} lg={{ span: 4}}>
-                                <Row>
-                                <Col>
-                                <Link className='my-2 btn btn-success d-block' size="sm" onClick={e=>checkout(e,productId)}>Checkout</Link>
-                                </Col>
-                                <Col>
-                                <Link className='my-2 btn btn-danger d-block' size="sm" onClick={e=>clearCart(e,productId)}>Clear Cart</Link>
-   
-                                </Col>
-                                </Row>
-
+                            <Col>
+                                <Link className='my-2 btn btn-danger d-block' size="sm" onClick={e => clearCart(e, productId)}>Clear Cart</Link>
                             </Col>
-
                         </Row>
-                </Container>
-            </Col>
-        </Row>
+                    </Col>
+                </Row>
+            </Container>
+        </Col>
+    </Row>
+
 
         <Row>
           <Col id="tabs">
             <Tabs defaultActiveKey="featured" id="fill-tab-example" className="mb-3" fill>
-              <Tab eventKey="featured" title="In the Cart">
-      
-                <div className="d-flex flex-wrap justify-content-center">
-                 {myCart.reduce((uniqueProducts, product) => {
-                     // Check if the product already exists in uniqueProducts array
-                     const existingProduct = uniqueProducts.find((p) =>
-                      p._id === product._id || product.isActive === false);
- 
-                     if (existingProduct) {
-                     // If the product exists, increment its count
-                     existingProduct.count += 1;
-                     } else {
-                     // If it doesn't exist, add it to the uniqueProducts array
-                     uniqueProducts.push({ ...product, count: 1 });
-                     }
- 
-                     // const newProduct = uniqueProducts.find((p) => product.isActive === true)
-                     
-                     return (uniqueProducts);
- 
-                    }, [myCart]).filter((product)=> product.count > 0) .map((product) => (
-                     
-                     <Col key={product._id + 1} xs={12} sm={6} md={4} lg={3} className="my-1 text-white">
-                     <Card className='bg-dark text-white productHighlight mx-1'>
-                     <Card.Header>
-                     <Card.Text> <li>Item: {product._id}</li></Card.Text>
-                     </Card.Header>
-                     <Card.Body>
-                     <Container>
-                     <Row>
-                     <Col>
-                     <img className="img-fluid border rounded mb-3" src={product.productImg} alt={`Product ${product._id}`} />
-                     
-                     <Card.Text>
-                     <li>User: {product.userId}</li>
-                     <li>Added On: {product.addedOn}</li>
-                     <li>Cart: {product._id}</li>
-                     </Card.Text>
-                     </Col>
-                     <Col>
-                         <Card.Text>
-                         <li>Subtotal:{FormatCurrency(product.subtotal)}</li>
-                         <li>On Cart: {`${product.isActive}`}</li>
-                         </Card.Text>
-                     </Col>
-                     <Col>
-                         <Card.Text>
-                         <li>Price: {FormatCurrency(product.price)}</li>
-                         <li>Quantity: {product.quantity}</li>
-                         </Card.Text>
-                     </Col>
-                     <Col>
+              <Tab eventKey="featured" title={`In the Cart (${cartCount})`}>
 
-                     </Col>
-                     </Row>
-                     </Container>
+              <div className="d-flex flex-wrap justify-content-center">
+                  {myCart.reduce((uniqueProducts, product) => {
+                    // Check if the product already exists in uniqueProducts array
+                    const existingProduct = uniqueProducts.find((p) => p._id === product._id);
 
-                     </Card.Body>
-                     <Card.Footer>
-                     <EditUserCart endpoint={endpoint} productId={product._id} fetchData={fetchData} isActive={product.isActive}/>
-                     </Card.Footer>
-                     </Card>
-                     </Col>
-                 ))}
-   
+                    if (existingProduct) {
+                      // If the product exists, increment its count
+                      existingProduct.count += 1;
+                    } else {
+                      // If it doesn't exist, add it to the uniqueProducts array
+                      uniqueProducts.push({ ...product, count: 1 });
+                    }
+
+                    // const newProduct = uniqueProducts.find((p) => product.isActive === true)
+
+                    return uniqueProducts; // Return the updated uniqueProducts array
+
+                  }, [myCart]).filter((product) => product.count >= 0 && product.isActive === true && product.isOrdered === false).map((product) => (
+                    <Col key={product._id} xs={12} sm={6} md={4} lg={3} className="my-1 text-white">
+                      <Card className='bg-dark text-white productHighlight mx-1'>
+                        <Card.Header>
+                          <Card.Text> <li>Item: {product._id}</li></Card.Text>
+                        </Card.Header>
+                        <Card.Body>
+                          <Container>
+                            <Row>
+                              <Col>
+                                <img className="img-fluid border rounded mb-3" src={product.productImg} alt={`Product ${product._id}`} />
+                                <Card.Text>
+                                  <li>User: {product.userId}</li>
+                                  <li>Added On: {product.addedOn}</li>
+                                  <li>Cart: {product._id}</li>
+                                </Card.Text>
+                              </Col>
+                              <Col>
+                                <Card.Text>
+                                  <li>Subtotal: {FormatCurrency(product.subtotal)}</li>
+                                  <li>On Cart: {`${product.isActive}`}</li>
+                                </Card.Text>
+                              </Col>
+                              <Col>
+                                <Card.Text>
+                                  <li>Price: {FormatCurrency(product.price)}</li>
+                                  <li>Quantity: {product.quantity}</li>
+                                </Card.Text>
+                              </Col>
+                              <Col></Col>
+                            </Row>
+                          </Container>
+                        </Card.Body>
+                        <Card.Footer>
+                          <EditUserCart endpoint={endpoint} productId={product._id} fetchData={fetchData} isActive={product.isActive} />
+                        </Card.Footer>
+                      </Card>
+                    </Col>
+                  ))}
                 </div>
+
+
               </Tab>
 
-              <Tab eventKey="likes" title="My Likes ❤️">
+              <Tab eventKey="likes" title={`My Likes ❤️ (${likesCount})`}>
               <div className="d-flex flex-wrap justify-content-center">        
               {myCart
               .reduce((uniqueProducts, product) => {
                     // Check if the product already exists in uniqueProducts array
                     const existingProduct = uniqueProducts.find((p) =>
-                     p._id === product._id || product.isActive === true);
+                     p._id === product._id);
 
                     if (existingProduct) {
                     // If the product exists, increment its count
@@ -227,7 +259,7 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
                     
                     return (uniqueProducts);
 
-                    }, [myCart]).filter((product)=> product.count > 0) .map((product) => (
+                    }, [myCart]).filter((product)=> product.count >= 0 && product.isActive === false && product.isOrdered === false).map((product) => (
                      
                      <Col key={product._id + 1} xs={12} sm={6} md={4} lg={3} className="my-1 text-white">
                      <Card className='bg-dark text-white productHighlight mx-1'>
@@ -258,12 +290,7 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
                          <li>Quantity: {product.quantity}</li>
                          </Card.Text>
                      </Col>
-                     <Col>
-                    
-                     {/* {console.log(`endpoint=${endpoint} product=${product._id} isActive=${product.isActive}`)} */}
-                     
-                     {/* {console.log(`endpoint: ${endpoint}${product._id}`)} */}
-                     </Col>
+
                      </Row>
                      </Container>
                      
@@ -278,10 +305,88 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
                 </div>
               </Tab>
 
-              <Tab eventKey="Orders" title="Orders">
-                <div className="d-flex flex-wrap justify-content-center">
-   
-                </div>
+              <Tab eventKey="Orders" title={`Orders (${ordersCount})`}>
+           
+              <div className="d-flex flex-wrap justify-content-center">        
+                  {myOrders
+                  .reduce((uniqueOrders, orders) => {
+                        // Check if the order already exists in uniqueOrders array
+                        const existingOrder = uniqueOrders.find((p) =>
+                        p._id === orders._id);
+
+                        if (existingOrder) {
+                        // If the order exists, increment its count
+                        existingOrder.count += 1;
+                        } else {
+                        // If it doesn't exist, add it to the uniqueOrders array
+                        uniqueOrders.push({ ...orders, count: 1 });
+                        }
+
+                        // const newOrders = uniqueOrders.find((p) => order.isActive === false)
+                        
+                        return (uniqueOrders);
+
+                        }, [myOrders]).filter((order)=> order.count >= 0 && order.isActive === true).map((order) => (
+                        
+                        <Col key={order._id + 1} xs={12} sm={6} md={4} lg={3} className="my-1 text-white">
+                        <Card className='bg-dark text-white productHighlight mx-1'>
+                        <Card.Header>
+                        <Container>
+                          <Row>
+                            <Col>
+                              <h3>Order Info:</h3>
+                              <h6>{order.referenceId}</h6>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>Order Date: {order.orderDate}</Col>
+                          
+                          </Row>
+                          </Container>
+                    
+                        </Card.Header>
+
+                        <Card.Body>
+                          <Container>
+                            <Row>
+                              <Col>Name: {order.fullName}</Col>
+                              <Col>Mobile: {order.mobileNo}</Col>
+                              <Col>Address: {order.address}</Col>
+                            </Row>
+                            </Container>
+
+                            <Container>
+                              <Col>Total Items: {order.totalItems}</Col>
+                              <Col>Total Amount: {FormatCurrency(order.totalAmount)}</Col>
+                          </Container>
+                        </Card.Body>
+
+                        <Card.Footer>
+                          <Container>
+                          {order.products.map((product, index) => (
+                            <Col key={index}>
+                              <div>
+                                <h6>{product.name}</h6>
+                                <ul>
+                                <li>Product ID: {product.productId}</li>
+                                <li>Price: ${product.price}</li>
+                                <li>Quantity: {product.quantity}</li>
+                                <li>Subtotal: ${product.subtotal}</li>
+                                <li>Is Ordered: {product.isOrdered ? 'Yes' : 'No'}</li>
+                                </ul>
+                               
+                                {/* <img src={product.productImg} alt={product.name} /> */}
+                              </div>
+                            </Col>
+                          ))}
+                          </Container>
+                        </Card.Footer>
+                        </Card>
+                        </Col>
+                    ))}       
+              </div>
+            
+                  
               </Tab>
 
             </Tabs>
