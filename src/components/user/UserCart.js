@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container, Row, Col, Tab, Tabs, Button, Table } from 'react-bootstrap';
+import { Card, Container, Row, Col, Tab, Tabs, Button, Table} from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
 import { Link } from 'react-router-dom';
 import FormatCurrency from '../FormatCurrency';
 import EditUserCart from './EditUserCart'
@@ -54,8 +55,9 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
              setOrdersCount(myOrders.map((product)=> product.isOrdered).length);
           }
           else{           
-              setCart([]);  
-             setOrdersCount(0)
+            setCart([]);
+            setCartCount(0);
+            setLikesCount(0);
           }
       })
       .catch(error => {
@@ -86,14 +88,16 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
 					text:'Cart is Empty.'
 				})
 				
-         //       fetchData();
+        setCart([]);
+        setCartCount(0);
+        setLikesCount(0);
 			}else{
 				Swal.fire({
 					title:'Error!',
 					icon:'error',
 					text:'Please try again'
 				})
-         //       fetchData();
+
 			}
 
             console.log('data:', data);
@@ -125,6 +129,10 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
             text: 'Thank you! Checkout successfully!',
           });
 
+          setCart([]);
+          setCartCount(0);
+          setLikesCount(0);
+
         } else {
           Swal.fire({
             title: 'Error!',
@@ -142,7 +150,7 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
           text: 'An error occurred during checkout. Please try again later.',
         });
 
-      });
+      },[]);
   };
   
 
@@ -195,7 +203,7 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
 
                     return uniqueProducts; // Return the updated uniqueProducts array
 
-                  }, [myCart]).filter((product) => product.count >= 0 && product.isActive === true && product.isOrdered === false).map((product) => (
+                  }, [myCart]).filter((product) => product.count > 0 && product.isActive === true && product.isOrdered === false).map((product) => (
                     <Col key={product._id} xs={12} sm={6} md={4} lg={3} className="my-1 text-white">
                       <Card className='bg-dark text-white productHighlight mx-1'>
                         <Card.Header>
@@ -259,7 +267,7 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
                     
                     return (uniqueProducts);
 
-                    }, [myCart]).filter((product)=> product.count >= 0 && product.isActive === false && product.isOrdered === false).map((product) => (
+                    }, [myCart]).filter((product)=> product.count > 0 && product.isActive === false && product.isOrdered === false).map((product) => (
                      
                      <Col key={product._id + 1} xs={12} sm={6} md={4} lg={3} className="my-1 text-white">
                      <Card className='bg-dark text-white productHighlight mx-1'>
@@ -326,16 +334,16 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
                         
                         return (uniqueOrders);
 
-                        }, [myOrders]).filter((order)=> order.count >= 0 && order.isActive === true).map((order) => (
+                        }, [myOrders]).filter((order)=> order.count > 0 && order.isActive === true ).map((order) => (
                         
-                        <Col key={order._id + 1} xs={12} sm={6} md={4} lg={3} className="my-1 text-white">
-                        <Card className='bg-dark text-white productHighlight mx-1'>
+                        <Col key={order._id + 1} xs={12} sm={6} md={4} lg={3} className="my-2 py-2 text-white">
+                        <Card className='d-flex bg-dark productHighlight align-self-start text-white mx-1'>
                         <Card.Header>
                         <Container>
                           <Row>
                             <Col>
                               <h3>Order Info:</h3>
-                              <h6>{order.referenceId}</h6>
+                              <h6>Ref: {order.referenceId}</h6>
                             </Col>
                           </Row>
                           <Row>
@@ -349,37 +357,43 @@ export default function UserCart({ productId, status, fetchData, endpoint }) {
                         <Card.Body>
                           <Container>
                             <Row>
-                              <Col>Name: {order.fullName}</Col>
-                              <Col>Mobile: {order.mobileNo}</Col>
-                              <Col>Address: {order.address}</Col>
-                            </Row>
+                                <Col>Name: {order.fullName}</Col>
+                              </Row>
+                              <Row>
+                                <Col>Mobile: {order.mobileNo}</Col>
+                              </Row>
+                              <Row>
+                                <Col>Address: {order.address}</Col>
+                              </Row>
                             </Container>
 
                             <Container>
-                              <Col>Total Items: {order.totalItems}</Col>
                               <Col>Total Amount: {FormatCurrency(order.totalAmount)}</Col>
-                          </Container>
-                        </Card.Body>
+                            </Container>
 
-                        <Card.Footer>
-                          <Container>
+                          <Container className='py-3'>
                           {order.products.map((product, index) => (
-                            <Col key={index}>
-                              <div>
-                                <h6>{product.name}</h6>
-                                <ul>
-                                <li>Product ID: {product.productId}</li>
-                                <li>Price: ${product.price}</li>
-                                <li>Quantity: {product.quantity}</li>
-                                <li>Subtotal: ${product.subtotal}</li>
-                                <li>Is Ordered: {product.isOrdered ? 'Yes' : 'No'}</li>
-                                </ul>
-                               
-                                {/* <img src={product.productImg} alt={product.name} /> */}
-                              </div>
-                            </Col>
+                           <Accordion>
+                           <Accordion.Item key={index} eventKey={index}>
+                            <Accordion.Header>
+                              {product.name}
+                            </Accordion.Header>
+                            <Accordion.Body>
+                            <Row><Col><img className='img-fluid' src={product.productImg} alt={product.name} /></Col></Row>
+                                <Row><Col>Product ID: {product.productId}</Col> </Row>
+                                <Row><Col>Price: ${product.price}</Col> </Row>
+                                <Row><Col>Quantity: {product.quantity}</Col> </Row>
+                                <Row><Col>Subtotal: ${product.subtotal}</Col> </Row>
+                                <Row><Col>Is Ordered: {product.isOrdered ? 'Yes' : 'No'}</Col> </Row>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </Accordion>
                           ))}
-                          </Container>
+                        </Container>
+                        </Card.Body>
+                      
+                          <Card.Footer>
+                          <Col>Total Items: {order.totalItems}</Col>
                         </Card.Footer>
                         </Card>
                         </Col>
