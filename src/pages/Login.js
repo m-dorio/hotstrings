@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, Container } from 'react-bootstrap';
+import FeaturedProducts from '../components/product/FeaturedProducts';
 import { Navigate } from 'react-router-dom'
 import UserContext from '../UserContext';
 import Swal from 'sweetalert2';
-
+import { Link } from 'react-router-dom';
 
 export default function Login() {
 
@@ -48,7 +49,7 @@ export default function Login() {
     });  
 
         Swal.fire({
-            title: "Login successfull",
+            title: "Login successful",
             icon: "success",
             text: "Welcome to HotStrings!"
         })
@@ -100,57 +101,81 @@ export default function Login() {
         }, [email, password]);
 
        
-return (
- 
-        (user.id !== null)?
-        <>
-         <Navigate to="/" />
-  
-         </>
-
-        :
-        <>
-        <div className=" text-warning vh-100">
-        <Row className="mt-3 mb-3 d-flex justify-content-center">
-            <Col xs={12} md={6} lg={4} xl={3}>
-                <Form onSubmit={(e) => authenticate(e)}>
-                    <h1 className="my-5 text-center">Login</h1>
-                    <Form.Group controlId="userEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control
+        return (
+            <>
+              {user.id !== null ? (
+                <>
+                  <Navigate to="/" />
+                </>
+              ) : (
+                <>
+                  <section id="banner">
+                    <div className="d-flex justify-content-center align-content-center">
+                      <div className="d-flex d-block d-sm-block d-md-none align-items-center">
+                        <p className="banner textfxa text-center mt-5">
+                          HOT<Link className="mt-5 textfxb" to="./">
+                            /STRINGS
+                          </Link>
+                        </p>
+                      </div>
+                      <div className="d-flex d-none d-sm-none d-md-block align-items-center">
+                        <p className="banner textfxa text-center mt-5">
+                          HOT<Link className="mt-5 textfxb" to="./">
+                            /STRINGS&nbsp;<i className="bowl-rice fa-solid fa-bowl-rice"></i>
+                          </Link>
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+          
+                  <Row id="landing" className="mt-3 mb-3 text-white d-flex justify-content-center">
+                    <Col xs={12} md={6} lg={6} xl={4}>
+                      <Form onSubmit={(e) => authenticate(e)}>
+                        <h1 className="my-5 text-center">Login</h1>
+                        <Form.Group controlId="userEmail">
+                          <Form.Label>Email address</Form.Label>
+                          <Form.Control
                             type="email"
                             placeholder="Enter email"
                             value={email} // Bind to email state
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                        />
-                    </Form.Group>
-               
-                    <Form.Group className='mt-3' controlId="password">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
+                          />
+                        </Form.Group>
+          
+                        <Form.Group className="mt-3" controlId="password">
+                          <Form.Label>Password</Form.Label>
+                          <Form.Control
                             type="password"
                             placeholder="Password"
                             value={password} // Bind to password state
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                        />
-                    </Form.Group>
-
-                    {isActive ? (
-                        <Button className='my-3' variant="primary" type="submit" id="submitBtn">
+                          />
+                        </Form.Group>
+          
+                        {isActive ? (
+                          <Button className="my-3" variant="primary" type="submit" id="submitBtn">
                             Submit
-                        </Button>
-                    ) : (
-                        <Button className='my-3' variant="danger" type="submit" id="submitBtn" disabled>
+                          </Button>
+                        ) : (
+                          <Button className="my-3" variant="danger" type="submit" id="submitBtn" disabled>
                             Submit
-                        </Button>
-                    )}
-                </Form>
-            </Col>
-        </Row>
+                          </Button>
+                        )}
+                      </Form>
 
-    </div>  
-</>
-)
+                      <h2 className="text-center text-white mt-5">Featured Products</h2>
+                        <Container>
+                            <Row className='d-flex justify-content-center align-content-center mb-5'>
+                                <FeaturedProducts />
+                            </Row>
+                        </Container>
+
+                    </Col>
+                  </Row>
+                </>
+              )}
+            </>
+          );
 }

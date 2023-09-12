@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import UserContext from '../UserContext';
 import { Navigate } from 'react-router-dom';
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -73,6 +74,17 @@ export default function Register() {
     	}, [])
     }
 
+    const resetForm=(e)=>{
+        e.preventDefault();
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setMobileNo('');
+        setAddress('');
+        setPassword('');
+        setUserImg('')
+        setConfirmPassword('')
+    }
 
     useEffect(()=>{
 
@@ -86,123 +98,148 @@ export default function Register() {
 
     },[firstName,lastName,email,mobileNo,password,confirmPassword])
 
-	return(
-
-        (user.id !==null)?
+return (
+    <>
+      {user.id !== null ? (
         <Navigate to="/users/login" />
-		:
-		<>
+      ) : (
+        <div className="text-warning">
 
-        <div className="text-warning vh-100">
-        <Row className='mt-3 mb-3 d-flex justify-content-center'>
-            <Col xs={12} md={6} lg={4} xl={3}>
-                <Form onSubmit={(e)=>registerUser(e)}>
+        <section id="banner">
+            <div className="d-flex justify-content-center align-content-center">
+                <div className="d-flex d-block d-sm-block d-md-none align-items-center">
+                <p className="banner textfxa text-center mt-5">
+                    HOT<Link className="mt-5 textfxb" to="./">
+                    /STRINGS
+                    </Link>
+                </p>
+                </div>
+                <div className="d-flex d-none d-sm-none d-md-block align-items-center">
+                <p className="banner textfxa text-center mt-5">
+                    HOT<Link className="mt-5 textfxb" to="./">
+                    /STRINGS&nbsp;<i className="bowl-rice fa-solid fa-bowl-rice"></i>
+                    </Link>
+                </p>
+                </div>
+            </div>
+        </section>
+          
+        <Row id="landing" className="mt-3 mb-3 text-white d-flex justify-content-center">
+            <Col xs={12} md={6} lg={6} xl={4}>
+              <Form onSubmit={(e) => registerUser(e)}>
                 <h1 className="my-5 text-center text-warning">Register</h1>
-
+  
                 <Form.Group>
-                    <Form.Label>First Name:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter First Name"
-                        required
-                        value={firstName}
-                        onChange={e=>{setFirstName(e.target.value)}}
-                    />
+                  <Form.Label>First Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter First Name"
+                    required
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
                 </Form.Group>
-
-                <Form.Group className='mt-3'>
-                    <Form.Label>Last Name:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Last Name"
-                        required
-                        value={lastName}
-                        onChange={e=>{setLastName(e.target.value)}}
-                    />
+  
+                <Form.Group className="mt-3">
+                  <Form.Label>Last Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Last Name"
+                    required
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
                 </Form.Group>
-
-
-                <Form.Group className='mt-3'>
-                    <Form.Label>Mobile No:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter 11-digit No."
-                        required
-                        value={mobileNo}
-                        onChange={e=>{setMobileNo(e.target.value)}}
-                    />
+  
+                <Form.Group className="mt-3">
+                  <Form.Label>Mobile No:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter 11-digit No."
+                    required
+                    value={mobileNo}
+                    onChange={(e) => setMobileNo(e.target.value)}
+                  />
                 </Form.Group>
-
-                
-                <Form.Group className='mt-3'>
-                    <Form.Label>Home/Office Address:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Billing/Home Address"
-                        required
-                        value={address}
-                        onChange={e=>{setAddress(e.target.value)}}
-                    />
+  
+                <Form.Group className="mt-3">
+                  <Form.Label>Home/Office Address:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Billing/Home Address"
+                    required
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
                 </Form.Group>
-
-
-                <Form.Group className='mt-3'>
-                    <Form.Label>Profile Picture:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Image URL [optional]"
-                        value={userImg}
-                        onChange={e=>{setUserImg(e.target.value)}}
-                    />
+  
+                <Form.Group className="mt-3">
+                  <Form.Label>Profile Picture:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Image URL [optional]"
+                    value={userImg}
+                    onChange={(e) => setUserImg(e.target.value)}
+                  />
                 </Form.Group>
-
-
-                <Form.Group className='mt-3'>
-                    <Form.Label>Email:</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter Email"
-                        required
-                        value={email}
-                        onChange={e=>{setEmail(e.target.value)}}
-                    />
+  
+                <Form.Group className="mt-3">
+                  <Form.Label>Email:</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter Email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </Form.Group>
-
-                <Form.Group className='mt-3'>
-                    <Form.Label>Password: </Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Enter Password"
-                        required
-                        value={password}
-                        onChange={e=>{setPassword(e.target.value)}}
-                    />
+  
+                <Form.Group className="mt-3">
+                  <Form.Label>Password: </Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter Password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </Form.Group>
-
-                <Form.Group className='mt-3'>
-                    <Form.Label>Confirm Password: </Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Confirm Password"
-                        required
-                        value={confirmPassword}
-                        onChange={e=>{setConfirmPassword(e.target.value)}}
-                    />
+  
+                <Form.Group className="mt-3">
+                  <Form.Label>Confirm Password: </Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Confirm Password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
                 </Form.Group>
-
-                {
-                    isActive ?
-                    <Button className='my-3' variant="primary" type="submit" id="submitBtn">Submit</Button>
-                    :
-                    <Button className='my-3' variant="danger" type="submit" id="submitBtn" disabled>Submit</Button>
-                }
-
-            </Form>
+  
+                {isActive ? (
+                  <>
+                    <Link className="btn btn-warning my-5 d-block" type="submit" id="submitBtn">
+                      Submit
+                    </Link>
+                    <Link className="btn btn-danger my-5 d-block" type="reset" onClick={resetForm} id="resetBtn">
+                      Reset
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link className="btn btn-secondary my-5 d-block" type="submit" id="submitBtn" disabled>
+                      Submit
+                    </Link>
+                    <Link className="btn btn-danger my-5 d-block" type="reset" onClick={resetForm} id="resetBtn">
+                      Reset
+                    </Link>
+                  </>
+                )}
+              </Form>
             </Col>
-        </Row>
-       
+          </Row>
         </div>
-
+      )}
     </>
-	)
+  );
 }

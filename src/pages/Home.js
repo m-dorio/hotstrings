@@ -23,10 +23,7 @@ export default function Home() {
     <div id="landing">
       <section id="banner">
         <div className="d-flex justify-content-center align-content-center">
-		{/* {loading ? (
-              <PlaceholderLoading colorStart="#313131" colorEnd="#1e1e1e" shape="rect" width={1250} height={300} />
-            ) : (
-				<> */}
+	
           <div className="d-flex d-block d-sm-block d-md-none align-items-center">
            <p className="banner textfxa text-center mt-5">
               HOT<Link className="mt-5 textfxb" to="./">/STRINGS</Link>
@@ -37,14 +34,13 @@ export default function Home() {
               HOT<Link className="mt-5 textfxb" to="./">/STRINGS&nbsp;<i className="bowl-rice fa-solid fa-bowl-rice"></i></Link>
             </p>
           </div>
-		   {/* </>
-		   )} */}
+	
         </div>
       </section>
 
       <h2 className="text-center text-white mt-5">Featured Products</h2>
       <Container>
-        <Row className='d-flex justify-content-center align-content-center mb-5'>
+      <Row id="landing" className="mt-3 mb-3 text-white d-flex justify-content-center">
               <FeaturedProducts />
         </Row>
       </Container>

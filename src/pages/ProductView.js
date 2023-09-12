@@ -68,7 +68,7 @@ const addToCart = () => {
           icon: 'success',
           text: "You have successfully added the product."
         });
- 
+
       } else {
         Swal.fire({
           title: "Something went wrong",
@@ -91,8 +91,8 @@ useEffect(() => {
         setDescription(data.description);
         setPrice(data.price);
         setImage(data.productImg);
-        setItemsToBuy(itemsToBuy); // Is this intended? It doesn't seem to be used.
-        setQuantity(data.quantity);
+        setItemsToBuy(0);
+        setQuantity(data.quantity - itemsToBuy);
         setRatings(data.ratings);
         setProductId(productId);
   })
